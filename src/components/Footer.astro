@@ -1,0 +1,157 @@
+---
+const links = {
+  company: ['About', 'Careers', 'Blog', 'Press'],
+  services: ['Business Law', 'Criminal Law', 'Family Law', 'Case Research'],
+  legal: ['Privacy Policy', 'Terms of Service', 'Cookie Policy'],
+};
+---
+
+<footer class="footer section--dark">
+  <div class="container footer__inner">
+
+    <div class="footer__brand">
+      <a href="/" class="footer__logo">LoopholeDB</a>
+      <p class="footer__tagline">
+        Legal intelligence for everyone. Precedent search, case law analysis, and
+        specialist attorney connections in one platform.
+      </p>
+      <p class="footer__email">
+        <span class="eyebrow" style="margin-bottom:0.25rem; display:block;">Get in touch</span>
+        <a href="mailto:hello@loopholedb.com" class="footer__mail">hello@loopholedb.com</a>
+      </p>
+    </div>
+
+    <nav class="footer__nav">
+      <div class="footer__col">
+        <p class="footer__col-title">Company</p>
+        <ul>
+          {links.company.map(l => <li><a href="#">{l}</a></li>)}
+        </ul>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title">Services</p>
+        <ul>
+          {links.services.map(l => <li><a href="#">{l}</a></li>)}
+        </ul>
+      </div>
+      <div class="footer__col">
+        <p class="footer__col-title">Legal</p>
+        <ul>
+          {links.legal.map(l => <li><a href="#">{l}</a></li>)}
+        </ul>
+      </div>
+    </nav>
+
+  </div>
+
+  <div class="container footer__bottom">
+    <p>© 2026 LoopholeDB. All rights reserved.</p>
+    <nav class="footer__bottom-links">
+      <a href="#">Home</a>
+      <a href="#">Projects</a>
+      <a href="#">Blog</a>
+      <a href="#">Contacts</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-top: var(--space-lg);
+    padding-bottom: 0;
+  }
+
+  .footer__inner {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .footer__logo {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: var(--color-cream);
+    display: block;
+    margin-bottom: 1rem;
+    letter-spacing: 0.02em;
+  }
+
+  .footer__tagline {
+    font-size: var(--text-sm);
+    color: rgba(242,235,224,0.5);
+    line-height: 1.7;
+    max-width: 34ch;
+    margin-bottom: 1.75rem;
+  }
+
+  .footer__mail {
+    font-size: var(--text-sm);
+    color: var(--color-cream);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(242,235,224,0.3);
+  }
+  .footer__mail:hover { text-decoration-color: var(--color-cream); }
+
+  .footer__nav {
+    display: contents;
+  }
+
+  .footer__col-title {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(242,235,224,0.45);
+    margin-bottom: 1.25rem;
+  }
+
+  .footer__col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer__col a {
+    font-size: var(--text-sm);
+    color: rgba(242,235,224,0.65);
+    transition: color var(--transition);
+  }
+  .footer__col a:hover { color: var(--color-cream); }
+
+  .footer__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1.5rem;
+    font-size: var(--text-xs);
+    color: rgba(242,235,224,0.35);
+    letter-spacing: 0.05em;
+  }
+
+  .footer__bottom-links {
+    display: flex;
+    gap: 2rem;
+  }
+  .footer__bottom-links a {
+    color: rgba(242,235,224,0.35);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color var(--transition);
+  }
+  .footer__bottom-links a:hover { color: var(--color-cream); }
+
+  @media (max-width: 900px) {
+    .footer__inner { grid-template-columns: 1fr 1fr; }
+    .footer__brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 600px) {
+    .footer__inner { grid-template-columns: 1fr; }
+    .footer__bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>

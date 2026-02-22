@@ -1,0 +1,25 @@
+---
+import Layout    from '../layouts/Layout.astro';
+import Nav       from '../components/Nav.astro';
+import Hero      from '../components/Hero.astro';
+import Services  from '../components/Services.astro';
+import Attorneys from '../components/Attorneys.astro';
+import Benefits  from '../components/Benefits.astro';
+import CTAStrip  from '../components/CTAStrip.astro';
+import Footer    from '../components/Footer.astro';
+---
+
+<Layout
+  title="LoopholeDB — Legal Intelligence Platform"
+  description="LoopholeDB is your specialist source for legal research, case law analysis, and family law consultancy."
+>
+  <Nav />
+  <main>
+    <Hero />
+    <Services />
+    <Attorneys />
+    <Benefits />
+    <CTAStrip />
+  </main>
+  <Footer />
+</Layout>

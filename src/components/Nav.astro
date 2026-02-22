@@ -1,0 +1,104 @@
+---
+const links = [
+  { label: 'Home',      href: '#home' },
+  { label: 'Services',  href: '#services' },
+  { label: 'Database',  href: '#database' },
+  { label: 'Contact',   href: '#contact' },
+];
+---
+
+<header class="nav-wrap">
+  <nav class="nav container">
+    <a href="/" class="nav__logo">LoopholeDB</a>
+
+    <ul class="nav__links">
+      {links.map(l => (
+        <li><a href={l.href}>{l.label}</a></li>
+      ))}
+    </ul>
+
+    <a href="#contact" class="btn btn--primary nav__cta">Get Started</a>
+
+    <!-- Mobile toggle (progressive enhancement) -->
+    <button class="nav__burger" aria-label="Open menu" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<style>
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-cream);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-block: 1.25rem;
+  }
+
+  .nav__logo {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--color-text-dark);
+    flex-shrink: 0;
+  }
+
+  .nav__links {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .nav__links a {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--color-text-mid);
+    transition: color var(--transition);
+  }
+  .nav__links a:hover { color: var(--color-text-dark); }
+
+  .nav__burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    padding: 4px;
+  }
+  .nav__burger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--color-text-dark);
+    border-radius: 2px;
+    transition: transform var(--transition);
+  }
+
+  @media (max-width: 768px) {
+    .nav__links, .nav__cta { display: none; }
+    .nav__burger { display: flex; }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links  = document.querySelector('.nav__links') as HTMLElement | null;
+  const cta    = document.querySelector('.nav__cta')   as HTMLElement | null;
+
+  toggle?.addEventListener('click', () => {
+    if (!links) return;
+    const open = links.style.display === 'flex';
+    links.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--color-cream);padding:1.5rem 2rem;gap:1.5rem;border-bottom:1px solid var(--color-border)';
+    if (cta) cta.style.display = open ? '' : 'none';
+  });
+</script>

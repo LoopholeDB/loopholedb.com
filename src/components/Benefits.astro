@@ -1,0 +1,90 @@
+---
+const benefits = [
+  {
+    title: 'Legal Representation',
+    body: 'Criminal defence, civil litigation, and various legal negotiations — handled by vetted senior counsel from day one.',
+  },
+  {
+    title: 'Full Case Transparency',
+    body: 'You have a right to know every detail of your case. We keep you informed at every stage, with zero surprises.',
+  },
+  {
+    title: '24 / 7 Support',
+    body: 'Our team is available around the clock to provide help, guidance, and urgent legal support whenever you need it.',
+  },
+];
+---
+
+<section class="section section--dark" id="benefits">
+  <div class="container benefits__inner">
+
+    <!-- Left -->
+    <div class="benefits__content">
+      <span class="eyebrow">Why LoopholeDB</span>
+      <h2 class="t-h1 benefits__headline">What Benefits<br/>Will You Get<br/>From Us?</h2>
+      <p class="t-body benefits__body">
+        We provide high quality legal intelligence and representation for you —
+        with the best-integrated professionals in the field.
+      </p>
+      <a href="#contact" class="btn btn--ghost">Find an Attorney</a>
+    </div>
+
+    <!-- Right -->
+    <div class="benefits__list">
+      {benefits.map(b => (
+        <div class="benefit-item">
+          <h3 class="benefit-item__title">{b.title}</h3>
+          <p class="benefit-item__body">{b.body}</p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .benefits__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 5rem;
+  }
+
+  .benefits__headline {
+    color: var(--color-cream);
+    margin-bottom: 1.25rem;
+  }
+  .benefits__body {
+    color: rgba(242,235,224,0.6);
+    max-width: 42ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .benefits__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .benefit-item {
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .benefit-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
+
+  .benefit-item__title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--color-cream);
+    margin-bottom: 0.5rem;
+  }
+  .benefit-item__body {
+    font-size: var(--text-sm);
+    color: rgba(242,235,224,0.55);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 900px) {
+    .benefits__inner { grid-template-columns: 1fr; gap: 3rem; }
+  }
+</style>
