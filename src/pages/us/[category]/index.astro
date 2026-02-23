@@ -1,0 +1,351 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const loopholes = await getCollection('loopholes');
+
+  // Group entries by category slug
+  const byCategory = loopholes.reduce<Record<string, typeof loopholes>>((acc, entry) => {
+    const cat = entry.id.split('/')[0];
+    (acc[cat] ??= []).push(entry);
+    return acc;
+  }, {});
+
+  return Object.entries(byCategory).map(([categorySlug, entries]) => ({
+    params: { category: categorySlug },
+    props: { categorySlug, entries },
+  }));
+}
+
+const categoryIcons: Record<string, string> = {
+  'consumer-rights':        '🛒',
+  'digital-privacy':        '🔐',
+  'education':              '🎓',
+  'employment-labor':       '💼',
+  'estate-planning':        '📜',
+  'financial-tax':          '💰',
+  'government-bureaucracy': '🏛️',
+  'healthcare':             '🏥',
+  'housing-real-estate':    '🏠',
+  'insurance':              '🛡️',
+  'small-business':         '🏪',
+  'travel':                 '✈️',
+};
+
+const categoryDescriptions: Record<string, string> = {
+  'consumer-rights':        'Know your rights as a buyer. Chargebacks, warranties, refunds, and protections against deceptive practices.',
+  'digital-privacy':        'Data rights, surveillance law, platform accountability, and what companies can legally do with your information.',
+  'education':              'Student rights, disability accommodations, disciplinary procedures, and financial aid rules.',
+  'employment-labor':       'Wages, wrongful termination, workplace safety, non-competes, and employee classification rules.',
+  'estate-planning':        'Wills, trusts, probate, power of attorney, and what happens to assets when there is no plan.',
+  'financial-tax':          'Tax obligations, IRS procedures, debt collection limits, bankruptcy rules, and financial disclosures.',
+  'government-bureaucracy': 'FOIA requests, administrative appeals, licensing disputes, and navigating federal and state agencies.',
+  'healthcare':             'Billing rights, surprise charges, insurance denials, HIPAA, and hospital charity care programs.',
+  'housing-real-estate':    'Tenant protections, eviction rules, fair housing, zoning, and landlord disclosure requirements.',
+  'insurance':              'Policy obligations, claim denials, bad faith practices, and what insurers must cover by law.',
+  'small-business':         'Business formation, contracts, licensing, liability, and regulatory compliance for entrepreneurs.',
+  'travel':                 'Passenger rights, flight delays, hotel disputes, visa rules, and travel insurance coverage.',
+};
+
+const difficultyOrder: Record<string, number> = {
+  'Easy': 0, 'Easy-Intermediate': 1, 'Intermediate': 2, 'Advanced': 3,
+};
+
+const { categorySlug, entries } = Astro.props;
+
+// Derive display name from the first entry's category field
+const categoryLabel = entries[0]?.data.category ?? categorySlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+const icon = categoryIcons[categorySlug] ?? '⚖️';
+const description = categoryDescriptions[categorySlug] ?? '';
+
+const sorted = [...entries].sort(
+  (a, b) => (difficultyOrder[a.data.difficulty] ?? 99) - (difficultyOrder[b.data.difficulty] ?? 99)
+);
+
+const riskColour: Record<string, string> = {
+  None: 'chip--green', Low: 'chip--green', Intermediate: 'chip--amber', High: 'chip--red',
+};
+---
+
+<Layout
+  title={`${categoryLabel} Loopholes — LoopholeDB`}
+  description={`Browse free plain-English guides to legal loopholes in ${categoryLabel}. ${description}`}
+>
+  <Nav />
+  <main>
+
+    <!-- ── Category Hero ─────────────────────────────── -->
+    <section class="cat-hero section--dark">
+      <div class="container cat-hero__inner">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span aria-hidden="true">›</span>
+          <a href="/#services">All Categories</a>
+          <span aria-hidden="true">›</span>
+          <span>{categoryLabel}</span>
+        </nav>
+
+        <div class="cat-hero__top">
+          <div class="cat-icon">{icon}</div>
+          <div>
+            <span class="eyebrow">Legal Category</span>
+            <h1 class="t-h1 cat-hero__title">{categoryLabel}</h1>
+          </div>
+        </div>
+
+        <p class="cat-hero__desc">{description}</p>
+
+        <div class="cat-hero__meta">
+          <span class="meta-pill">{sorted.length} {sorted.length === 1 ? 'Loophole' : 'Loopholes'}</span>
+          <span class="meta-pill">United States</span>
+          <span class="meta-pill">Free Access</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Loophole List ─────────────────────────────── -->
+    <section class="section">
+      <div class="container">
+        <div class="list-header">
+          <h2 class="t-h2">Available Loopholes</h2>
+          <p class="t-body">
+            Each entry below is a plain-English guide to a specific legal right, rule,
+            or workaround — including the exact laws that back it up.
+          </p>
+        </div>
+
+        <div class="lh-grid">
+          {sorted.map(entry => {
+            const slug = entry.id.split('/')[1];
+            const { title, difficulty, risk_level, potential_savings, applicable_states } = entry.data;
+            return (
+              <a href={`/us/${categorySlug}/${slug}`} class="lh-card">
+                <div class="lh-card__header">
+                  <span class={`chip ${riskColour[risk_level] ?? 'chip--amber'}`}>{risk_level} Risk</span>
+                  <span class="chip chip--neutral">{difficulty}</span>
+                </div>
+                <h3 class="lh-card__title">{title}</h3>
+                {potential_savings && (
+                  <p class="lh-card__savings">
+                    <span class="savings-label">Potential savings</span>
+                    {potential_savings}
+                  </p>
+                )}
+                <div class="lh-card__footer">
+                  <span class="lh-card__states">{applicable_states === 'All' ? 'All U.S. States' : applicable_states}</span>
+                  <span class="lh-card__cta">Read Guide →</span>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Bottom CTA ────────────────────────────────── -->
+    <section class="section section--tinted cta-bottom">
+      <div class="container cta-bottom__inner">
+        <div>
+          <span class="eyebrow">Need Specific Help?</span>
+          <h2 class="t-h2">Not Sure How This<br/>Applies to You?</h2>
+          <p class="t-body" style="margin-top:1rem; max-width:46ch;">
+            Our consulting service connects you with the right guidance for your
+            specific situation — no jargon, no hourly billing surprises.
+          </p>
+        </div>
+        <a href="/#contact" class="btn btn--primary">Get in Touch →</a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────── */
+  .cat-hero { padding-block: 4rem 3.5rem; }
+  .cat-hero__inner { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .cat-hero__top {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .cat-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    flex-shrink: 0;
+  }
+
+  .cat-hero__title {
+    color: var(--color-cream);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    margin-top: 0.25rem;
+  }
+
+  .cat-hero__desc {
+    font-size: 1.05rem;
+    color: rgba(242,235,224,0.6);
+    max-width: 58ch;
+    line-height: 1.75;
+  }
+
+  .cat-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .meta-pill {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(242,235,224,0.5);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    padding: 0.35rem 0.85rem;
+  }
+
+  /* ── Breadcrumb ───────────────────────────────────── */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(242,235,224,0.4);
+    flex-wrap: wrap;
+  }
+  .breadcrumb a { color: rgba(242,235,224,0.55); transition: color var(--transition); }
+  .breadcrumb a:hover { color: var(--color-cream); }
+  .breadcrumb span:last-child { color: rgba(242,235,224,0.75); }
+
+  /* ── List header ──────────────────────────────────── */
+  .list-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* ── Loophole grid ────────────────────────────────── */
+  .lh-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .lh-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
+    cursor: pointer;
+  }
+  .lh-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.09);
+    transform: translateY(-3px);
+    border-color: var(--color-brown-mid);
+  }
+
+  .lh-card__header {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+    border: 1px solid transparent;
+  }
+  .chip--green   { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+  .chip--amber   { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+  .chip--red     { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+  .chip--neutral { background: var(--color-cream-dark); color: var(--color-text-mid); border-color: var(--color-border); }
+
+  .lh-card__title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    line-height: 1.35;
+    flex: 1;
+  }
+
+  .lh-card__savings {
+    font-size: var(--text-sm);
+    color: var(--color-text-mid);
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .savings-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .lh-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-xs);
+  }
+  .lh-card__states { color: var(--color-text-muted); font-weight: 500; }
+  .lh-card__cta {
+    color: var(--color-brown-cta);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    transition: letter-spacing var(--transition);
+  }
+  .lh-card:hover .lh-card__cta { letter-spacing: 0.1em; }
+
+  /* ── Bottom CTA ───────────────────────────────────── */
+  .cta-bottom__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  /* ── Responsive ───────────────────────────────────── */
+  @media (max-width: 768px) {
+    .list-header { grid-template-columns: 1fr; }
+    .cat-hero__top { flex-direction: column; align-items: flex-start; }
+    .cta-bottom__inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>

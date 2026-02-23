@@ -1,7 +1,7 @@
 ---
 const links = {
   company: ['About', 'Careers', 'Blog', 'Press'],
-  services: ['Business Law', 'Criminal Law', 'Family Law', 'Case Research'],
+  categories: ['Consumer Rights', 'Housing', 'Healthcare', 'Employment', 'Small Business'],
   legal: ['Privacy Policy', 'Terms of Service', 'Cookie Policy'],
 };
 ---
@@ -12,8 +12,8 @@ const links = {
     <div class="footer__brand">
       <a href="/" class="footer__logo">LoopholeDB</a>
       <p class="footer__tagline">
-        Legal intelligence for everyone. Precedent search, case law analysis, and
-        specialist attorney connections in one platform.
+        A free, plain-English database of legal loopholes — built to give everyone
+        access to the same legal advantages the wealthy take for granted.
       </p>
       <p class="footer__email">
         <span class="eyebrow" style="margin-bottom:0.25rem; display:block;">Get in touch</span>
@@ -29,9 +29,9 @@ const links = {
         </ul>
       </div>
       <div class="footer__col">
-        <p class="footer__col-title">Services</p>
+        <p class="footer__col-title">Categories</p>
         <ul>
-          {links.services.map(l => <li><a href="#">{l}</a></li>)}
+          {links.categories.map(l => <li><a href="#">{l}</a></li>)}
         </ul>
       </div>
       <div class="footer__col">
@@ -47,10 +47,9 @@ const links = {
   <div class="container footer__bottom">
     <p>© 2026 LoopholeDB. All rights reserved.</p>
     <nav class="footer__bottom-links">
-      <a href="#">Home</a>
-      <a href="#">Projects</a>
-      <a href="#">Blog</a>
-      <a href="#">Contacts</a>
+      <a href="#home">Home</a>
+      <a href="#services">Categories</a>
+      <a href="#contact">Contact</a>
     </nav>
   </div>
 </footer>

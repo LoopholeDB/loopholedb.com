@@ -1,21 +1,46 @@
 ---
-const services = [
-  {
-    icon: '⚖️',
-    title: 'Business Law',
-    body: 'Comprehensive coverage of legal business entities — from sole traders to complex corporate structures. Search statutes, cases, and regulatory guidance instantly.',
-  },
-  {
-    icon: '🔒',
-    title: 'Criminal Law',
-    body: 'The body of law relating to crime. Precedent search across threatening, harmful, and unlawful conduct with linked sentencing guidelines.',
-  },
-  {
-    icon: '🏛️',
-    title: 'Family Law',
-    body: 'A specialist practice area covering divorce, child custody, adoption, and family relationships. Whatever your situation, our database makes it familiar.',
-  },
-];
+import fs from 'node:fs';
+import path from 'node:path';
+
+const categoryIcons: Record<string, string> = {
+  'consumer-rights':       '🛒',
+  'digital-privacy':       '🔐',
+  'education':             '🎓',
+  'employment-labor':      '💼',
+  'estate-planning':       '📜',
+  'financial-tax':         '💰',
+  'government-bureaucracy':'🏛️',
+  'healthcare':            '🏥',
+  'housing-real-estate':   '🏠',
+  'insurance':             '🛡️',
+  'small-business':        '🏪',
+  'travel':                '✈️',
+};
+
+const categoryDescriptions: Record<string, string> = {
+  'consumer-rights':       'Know your rights as a buyer. Chargebacks, warranties, refunds, and protections against deceptive practices.',
+  'digital-privacy':       'Data rights, surveillance law, platform accountability, and what companies can legally do with your information.',
+  'education':             'Student rights, disability accommodations, disciplinary procedures, and financial aid rules.',
+  'employment-labor':      'Wages, wrongful termination, workplace safety, non-competes, and employee classification rules.',
+  'estate-planning':       'Wills, trusts, probate, power of attorney, and what happens to assets when there is no plan.',
+  'financial-tax':         'Tax obligations, IRS procedures, debt collection limits, bankruptcy rules, and financial disclosures.',
+  'government-bureaucracy':'FOIA requests, administrative appeals, licensing disputes, and navigating federal and state agencies.',
+  'healthcare':            'Billing rights, surprise charges, insurance denials, HIPAA, and hospital charity care programs.',
+  'housing-real-estate':   'Tenant protections, eviction rules, fair housing, zoning, and landlord disclosure requirements.',
+  'insurance':             'Policy obligations, claim denials, bad faith practices, and what insurers must cover by law.',
+  'small-business':        'Business formation, contracts, licensing, liability, and regulatory compliance for entrepreneurs.',
+  'travel':                'Passenger rights, flight delays, hotel disputes, visa rules, and travel insurance coverage.',
+};
+
+const lhdbPath = path.resolve('LHDB/us');
+const categories = fs.readdirSync(lhdbPath, { withFileTypes: true })
+  .filter(d => d.isDirectory())
+  .map(d => ({
+    slug: d.name,
+    title: d.name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+    icon: categoryIcons[d.name] ?? '⚖️',
+    body: categoryDescriptions[d.name] ?? '',
+  }));
 ---
 
 <section class="section section--tinted" id="services">
@@ -24,23 +49,23 @@ const services = [
     <div class="services__header">
       <div>
         <span class="eyebrow">What We Cover</span>
-        <h2 class="t-h1">The Areas Where<br/>We Practise Law</h2>
+        <h2 class="t-h1">The Areas Where<br/>Law Has Loopholes</h2>
       </div>
       <p class="t-body services__intro">
-        We offer a wide range of services to our customers and go the extra
-        length to make sure justice is served in every case.
+        We translate complex statutes, rulings, and regulations into plain English —
+        so you know your rights and options without needing to hire a lawyer.
       </p>
     </div>
 
     <hr class="rule services__rule" />
 
     <div class="services__grid">
-      {services.map((s, i) => (
+      {categories.map(s => (
         <article class="service-card">
           <div class="service-card__icon">{s.icon}</div>
           <h3 class="t-h3 service-card__title">{s.title}</h3>
           <p class="t-sm service-card__body">{s.body}</p>
-          <a href="#contact" class="btn btn--link">Learn More →</a>
+          <a href={`/us/${s.slug}`} class="btn btn--link">Learn More →</a>
         </article>
       ))}
     </div>
@@ -98,5 +123,9 @@ const services = [
   @media (max-width: 900px) {
     .services__header { grid-template-columns: 1fr; }
     .services__grid   { grid-template-columns: 1fr; }
+  }
+
+  @media (min-width: 901px) and (max-width: 1200px) {
+    .services__grid { grid-template-columns: repeat(2, 1fr); }
   }
 </style>

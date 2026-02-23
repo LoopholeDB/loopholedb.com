@@ -1,0 +1,359 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const loopholes = await getCollection('loopholes');
+  return loopholes.map(entry => {
+    const parts = entry.id.split('/');
+    const category = parts[0];
+    const slug = parts[1];
+    return { params: { category, slug }, props: { entry } };
+  });
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, category, difficulty, risk_level, applicable_states, last_verified, potential_savings } = entry.data;
+
+const riskColour: Record<string, string> = {
+  None:         'badge--green',
+  Low:          'badge--green',
+  Intermediate: 'badge--amber',
+  High:         'badge--red',
+};
+const badgeClass = riskColour[risk_level] ?? 'badge--amber';
+
+const categorySlug = entry.id.split('/')[0];
+const categoryLabel = category;
+---
+
+<Layout
+  title={`${title} — LoopholeDB`}
+  description={`Learn how to use the "${title}" loophole. Plain-English guide covering who qualifies, how it works, and the legal basis.`}
+>
+  <Nav />
+  <main>
+
+    <!-- ── Page Hero ────────────────────────────────── -->
+    <section class="lh-hero section--dark">
+      <div class="container lh-hero__inner">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span aria-hidden="true">›</span>
+          <a href={`/us/${categorySlug}`}>{categoryLabel}</a>
+          <span aria-hidden="true">›</span>
+          <span>{title}</span>
+        </nav>
+
+        <span class="eyebrow">{categoryLabel}</span>
+        <h1 class="t-h1 lh-hero__title">{title}</h1>
+
+        <div class="lh-badges">
+          <span class="badge">
+            <span class="badge__label">Difficulty</span>
+            <span class="badge__val">{difficulty}</span>
+          </span>
+          <span class={`badge ${badgeClass}`}>
+            <span class="badge__label">Risk</span>
+            <span class="badge__val">{risk_level}</span>
+          </span>
+          <span class="badge">
+            <span class="badge__label">Applies To</span>
+            <span class="badge__val">{applicable_states}</span>
+          </span>
+          {potential_savings && (
+            <span class="badge badge--highlight">
+              <span class="badge__label">Potential Savings</span>
+              <span class="badge__val">{potential_savings}</span>
+            </span>
+          )}
+          <span class="badge badge--muted">
+            <span class="badge__label">Last Verified</span>
+            <span class="badge__val">{last_verified}</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Content ──────────────────────────────────── -->
+    <section class="section lh-content">
+      <div class="container lh-content__inner">
+        <article class="prose">
+          <Content />
+        </article>
+
+        <aside class="lh-sidebar">
+          <div class="sidebar-card">
+            <h2 class="sidebar-card__heading">Quick Facts</h2>
+            <dl class="sidebar-dl">
+              <div>
+                <dt>Difficulty</dt>
+                <dd>{difficulty}</dd>
+              </div>
+              <div>
+                <dt>Risk Level</dt>
+                <dd>{risk_level}</dd>
+              </div>
+              <div>
+                <dt>Applies To</dt>
+                <dd>{applicable_states}</dd>
+              </div>
+              {potential_savings && (
+                <div>
+                  <dt>Potential Savings</dt>
+                  <dd>{potential_savings}</dd>
+                </div>
+              )}
+              <div>
+                <dt>Last Verified</dt>
+                <dd>{last_verified}</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="sidebar-card sidebar-card--cta">
+            <h2 class="sidebar-card__heading">Need Specific Help?</h2>
+            <p>If you need tailored guidance applying this to your situation, our consulting service can help.</p>
+            <a href="/#contact" class="btn btn--primary" style="margin-top:1.25rem; display:inline-flex;">Get in Touch →</a>
+          </div>
+
+          <a href="/#services" class="sidebar-back">← Back to All Categories</a>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────── */
+  .lh-hero {
+    padding-block: 4rem 3.5rem;
+  }
+  .lh-hero__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .lh-hero__title {
+    color: var(--color-cream);
+    max-width: 22ch;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+  }
+
+  /* ── Breadcrumb ───────────────────────────────────── */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(242,235,224,0.4);
+    flex-wrap: wrap;
+  }
+  .breadcrumb a { color: rgba(242,235,224,0.55); transition: color var(--transition); }
+  .breadcrumb a:hover { color: var(--color-cream); }
+  .breadcrumb span:last-child { color: rgba(242,235,224,0.75); }
+
+  /* ── Badges ───────────────────────────────────────── */
+  .lh-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+  .badge {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.9rem;
+  }
+  .badge__label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(242,235,224,0.4);
+  }
+  .badge__val {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-cream);
+  }
+  .badge--green  { border-color: rgba(134,239,172,0.25); background: rgba(134,239,172,0.07); }
+  .badge--amber  { border-color: rgba(252,211,77,0.25);  background: rgba(252,211,77,0.07); }
+  .badge--red    { border-color: rgba(252,165,165,0.25); background: rgba(252,165,165,0.07); }
+  .badge--highlight { border-color: rgba(242,235,224,0.25); background: rgba(242,235,224,0.09); }
+  .badge--muted  { opacity: 0.7; }
+
+  /* ── Content layout ───────────────────────────────── */
+  .lh-content__inner {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* ── Prose ────────────────────────────────────────── */
+  .prose {
+    min-width: 0;
+  }
+  .prose :global(h1) { display: none; } /* title already shown in hero */
+
+  .prose :global(h2) {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-dark);
+    margin-top: 2.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .prose :global(h2:first-of-type) { margin-top: 0; }
+
+  .prose :global(h3) {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .prose :global(p) {
+    color: var(--color-text-mid);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .prose :global(ol),
+  .prose :global(ul) {
+    padding-left: 1.25rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .prose :global(ol) { list-style: decimal; }
+  .prose :global(ul) { list-style: disc; }
+
+  .prose :global(li) {
+    color: var(--color-text-mid);
+    line-height: 1.75;
+    font-size: var(--text-body);
+  }
+
+  .prose :global(strong) {
+    font-weight: 600;
+    color: var(--color-text-dark);
+  }
+
+  .prose :global(a) {
+    color: var(--color-brown-cta);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(75,53,32,0.35);
+    transition: text-decoration-color var(--transition);
+  }
+  .prose :global(a:hover) { text-decoration-color: var(--color-brown-cta); }
+
+  /* ── Sidebar ──────────────────────────────────────── */
+  .lh-sidebar {
+    position: sticky;
+    top: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .sidebar-card {
+    background: var(--color-cream-dark);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+  }
+  .sidebar-card--cta {
+    background: var(--color-espresso);
+    border-color: transparent;
+    color: var(--color-cream);
+  }
+  .sidebar-card--cta p {
+    font-size: var(--text-sm);
+    color: rgba(242,235,224,0.6);
+    line-height: 1.65;
+    margin-top: 0.5rem;
+  }
+
+  .sidebar-card__heading {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-dark);
+    margin-bottom: 1.25rem;
+  }
+  .sidebar-card--cta .sidebar-card__heading { color: var(--color-cream); }
+
+  .sidebar-dl {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .sidebar-dl > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+  }
+  .sidebar-dl > div:last-child { border-bottom: none; }
+  .sidebar-dl dt {
+    color: var(--color-text-muted);
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .sidebar-dl dd {
+    color: var(--color-text-dark);
+    font-weight: 500;
+    text-align: right;
+  }
+
+  .sidebar-back {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    transition: color var(--transition);
+    padding: 0.25rem 0;
+  }
+  .sidebar-back:hover { color: var(--color-text-dark); }
+
+  /* ── Responsive ───────────────────────────────────── */
+  @media (max-width: 900px) {
+    .lh-content__inner {
+      grid-template-columns: 1fr;
+    }
+    .lh-sidebar {
+      position: static;
+      order: -1;
+    }
+  }
+</style>
