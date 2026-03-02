@@ -1,0 +1,323 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const lastUpdated = '2026-02-23';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  'name': 'Legal Disclaimer — LoopholeDB',
+  'url': 'https://loopholedb.com/disclaimer',
+  'description': 'Important disclaimers regarding the accuracy, jurisdiction, and outcomes of information published on LoopholeDB.com.',
+  'publisher': {
+    '@type': 'Organization',
+    'name': 'LoopholeDB',
+    'url': 'https://loopholedb.com',
+  },
+};
+---
+
+<Layout
+  title="Legal Disclaimer — LoopholeDB"
+  description="Important disclaimers regarding the accuracy, jurisdiction, and outcomes of information published on LoopholeDB.com."
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Nav />
+  <main>
+
+    <section class="hero section--dark">
+      <div class="container hero__inner">
+        <span class="eyebrow">Legal</span>
+        <h1 class="t-h1 hero__title">Disclaimer</h1>
+        <p class="hero__meta">LoopholeDB.com · Last updated <time datetime={lastUpdated}>{lastUpdated}</time></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container page__inner">
+
+        <nav class="toc" aria-label="On this page">
+          <p class="toc__heading">On this page</p>
+          <ol>
+            <li><a href="#general">General Legal Disclaimer</a></li>
+            <li><a href="#accuracy">Accuracy & Currency of Information</a></li>
+            <li><a href="#jurisdiction">Jurisdiction & Geographic Applicability</a></li>
+            <li><a href="#outcomes">No Guarantee of Outcome</a></li>
+            <li><a href="#contact">Questions</a></li>
+          </ol>
+        </nav>
+
+        <article class="prose">
+
+          <section id="general">
+            <h2>1. General Legal Disclaimer</h2>
+            <p>
+              The information published on <strong>LoopholeDB.com</strong> is provided solely for
+              general informational and educational purposes. It does not constitute legal advice,
+              legal opinion, or any other form of professional advice, and must not be treated as
+              such. Nothing on this website creates, or is intended to create, an attorney-client
+              relationship between you and LoopholeDB, its operators, contributors, or any
+              affiliated parties. LoopholeDB is not a law firm and does not provide legal
+              representation or legal counsel of any kind.
+            </p>
+            <p>
+              You should not act, or refrain from acting, on the basis of any information on this
+              website without first seeking independent legal advice from a qualified attorney
+              licensed to practise in your jurisdiction. The cost of not doing so may far exceed
+              the cost of a professional consultation.
+            </p>
+          </section>
+
+          <section id="accuracy">
+            <h2>2. Accuracy &amp; Currency of Information</h2>
+            <p>
+              Laws, regulations, court decisions, agency interpretations, and government policies
+              change frequently — sometimes with little or no notice. While LoopholeDB makes
+              reasonable efforts to ensure the information published on this site is accurate and
+              up to date at the time of publication, <strong>we make no representation, warranty,
+              or guarantee that any content is current, complete, accurate, or free from
+              error</strong> as of the date on which you access it.
+            </p>
+            <p>
+              Each entry on LoopholeDB.com displays a "Last Verified" or "Last Updated" date
+              indicating when our team last reviewed that content. This date is provided for
+              transparency only and does not guarantee that the legal position described remains
+              valid after that date. Changes in legislation, new court rulings, amended regulations,
+              or shifts in agency enforcement policy may have occurred since the last review.
+            </p>
+            <p>
+              <strong>You are solely responsible for verifying the current state of the law
+              before taking any action.</strong> LoopholeDB expressly disclaims all liability
+              for any loss, damage, or adverse outcome arising from your reliance on information
+              that is outdated, incomplete, or inaccurate.
+            </p>
+          </section>
+
+          <section id="jurisdiction">
+            <h2>3. Jurisdiction &amp; Geographic Applicability</h2>
+            <p>
+              Legal rights, rules, and workarounds vary significantly across jurisdictions.
+              What is permitted, required, or enforceable under federal law may differ from
+              what applies under the law of a particular state, province, territory, county,
+              or municipality. Information published on LoopholeDB.com may describe:
+            </p>
+            <ul>
+              <li>Federal law (US or Canadian), which applies nationally but may interact differently with state or provincial law;</li>
+              <li>The law of a specific state or province, which may not apply — or may apply differently — in other jurisdictions; or</li>
+              <li>A general legal principle that may be subject to local exceptions, limitations, or conditions.</li>
+            </ul>
+            <p>
+              Each entry on LoopholeDB.com includes an "Applies To" or "Jurisdiction" indicator.
+              This indicator is a guide only and does not constitute a comprehensive assessment
+              of applicability. <strong>A loophole, right, or workaround that exists in one
+              jurisdiction may not exist, may be narrower in scope, or may operate completely
+              differently in another.</strong>
+            </p>
+            <p>
+              Users outside the United States and Canada should be aware that content on this
+              site is developed for US and Canadian law only. Nothing on LoopholeDB.com should
+              be interpreted as describing the law of any other country.
+            </p>
+            <p>
+              Always confirm that the legal position described applies specifically to your
+              jurisdiction and circumstances before relying on it. LoopholeDB disclaims all
+              liability for any loss arising from your use of information in a jurisdiction
+              for which it was not intended or in which it does not apply.
+            </p>
+          </section>
+
+          <section id="outcomes">
+            <h2>4. No Guarantee of Outcome</h2>
+            <p>
+              Using a legal loophole, invoking a legal right, or following a strategy described
+              on LoopholeDB.com does not guarantee any particular legal, financial, or practical
+              outcome. Legal results depend on a wide range of factors outside LoopholeDB's
+              knowledge or control, including but not limited to:
+            </p>
+            <ul>
+              <li>The specific facts and circumstances of your situation;</li>
+              <li>How a court, tribunal, agency, or opposing party interprets the applicable law;</li>
+              <li>Changes in the law or enforcement priorities that have occurred since our last review;</li>
+              <li>The quality and strategy of legal representation on both sides;</li>
+              <li>Local judicial culture, procedural rules, and evidentiary standards; and</li>
+              <li>Factors unique to your jurisdiction, employer, landlord, insurer, or counterparty.</li>
+            </ul>
+            <p>
+              <strong>LoopholeDB makes no representation, warranty, or guarantee — express or
+              implied — that following any information on this site will produce a favourable
+              legal outcome, financial saving, or other result.</strong> Prior outcomes, whether
+              achieved by LoopholeDB's team, contributors, or third parties, are not indicative
+              of future results in your situation.
+            </p>
+            <p>
+              Any "Potential Savings" figures displayed on this site are illustrative estimates
+              based on publicly reported outcomes or general legal principles. They are not
+              predictions of what you will save or recover, and actual results may be materially
+              different or nil.
+            </p>
+            <p>
+              LoopholeDB, its operators, contributors, employees, and affiliates expressly
+              disclaim all liability for any direct, indirect, incidental, consequential,
+              or punitive loss or damage arising from your use of, or reliance on, any
+              information on this site, regardless of whether such loss was foreseeable.
+              Use of this website is entirely at your own risk.
+            </p>
+          </section>
+
+          <section id="contact">
+            <h2>5. Questions</h2>
+            <p>
+              If you have questions about this disclaimer or the information published on
+              LoopholeDB.com, please contact us at:
+            </p>
+            <p>
+              <a href="mailto:followmoney.ca@gmail.com">followmoney.ca@gmail.com</a>
+            </p>
+            <p>
+              Please note that responding to your enquiry does not create a professional
+              relationship of any kind and does not constitute legal advice.
+            </p>
+          </section>
+
+        </article>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────── */
+  .hero { padding-block: 4rem 3rem; }
+  .hero__inner { display: flex; flex-direction: column; gap: 1rem; }
+  .hero__title {
+    color: var(--color-cream);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+  .hero__meta {
+    font-size: var(--text-xs);
+    color: rgba(242,235,224,0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── Layout ───────────────────────────────────────── */
+  .page__inner {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  /* ── TOC ──────────────────────────────────────────── */
+  .toc {
+    position: sticky;
+    top: 5rem;
+    background: var(--color-cream-dark);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+  }
+  .toc__heading {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.85rem;
+  }
+  .toc ol {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    list-style: none;
+    padding: 0;
+    counter-reset: toc;
+  }
+  .toc a {
+    font-size: var(--text-sm);
+    color: var(--color-text-mid);
+    transition: color var(--transition);
+    line-height: 1.4;
+  }
+  .toc a:hover { color: var(--color-text-dark); }
+
+  /* ── Prose ────────────────────────────────────────── */
+  .prose {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .prose section {
+    padding-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .prose section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .prose h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-dark);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .prose p {
+    color: var(--color-text-mid);
+    line-height: 1.85;
+    margin-bottom: 1rem;
+    font-size: var(--text-body);
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  .prose strong {
+    font-weight: 600;
+    color: var(--color-text-dark);
+  }
+
+  .prose ul, .prose ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .prose ul { list-style: disc; }
+  .prose ol { list-style: decimal; }
+
+  .prose li {
+    color: var(--color-text-mid);
+    line-height: 1.75;
+    font-size: var(--text-body);
+  }
+
+  .prose a {
+    color: var(--color-brown-cta);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(75,53,32,0.3);
+    transition: text-decoration-color var(--transition);
+  }
+  .prose a:hover { text-decoration-color: var(--color-brown-cta); }
+
+  /* ── Responsive ───────────────────────────────────── */
+  @media (max-width: 768px) {
+    .page__inner { grid-template-columns: 1fr; }
+    .toc { position: static; }
+  }
+</style>

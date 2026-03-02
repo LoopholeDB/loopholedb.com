@@ -2,12 +2,20 @@
 export interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  noindex?: boolean;
 }
 
 const {
-  title = 'LoopholeDB — Legal Intelligence Platform',
-  description = 'LoopholeDB is your specialist source for legal research, case law analysis, and family law consultancy. Access the intelligence you need to win.',
+  title = 'LoopholeDB — Legal Loopholes for Everyone',
+  description = 'A free plain-English database of legal loopholes, rights, and workarounds — the same knowledge expensive lawyers charge thousands to provide.',
+  ogImage,
+  noindex = false,
 } = Astro.props;
+
+const canonicalUrl  = new URL(Astro.url.pathname, Astro.site).href;
+const defaultOgImage = new URL('/og-image.png', Astro.site).href;
+const ogImageUrl    = ogImage ? new URL(ogImage, Astro.site).href : defaultOgImage;
 ---
 
 <!DOCTYPE html>
@@ -15,9 +23,44 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Primary meta -->
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:site_name"   content="LoopholeDB" />
+    <meta property="og:url"         content={canonicalUrl} />
+    <meta property="og:title"       content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image"       content={ogImageUrl} />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale"      content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image"       content={ogImageUrl} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- JSON-LD slot — each page injects its own structured data -->
+    <slot name="head" />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Y8V2WT646"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-4Y8V2WT646');
+    </script>
   </head>
   <body>
     <slot />

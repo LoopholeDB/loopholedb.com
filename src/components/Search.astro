@@ -1,0 +1,233 @@
+---
+---
+
+<div
+  id="searchModal"
+  class="search-modal"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Search LoopholeDB"
+>
+  <div class="search-modal__backdrop" id="searchBackdrop"></div>
+
+  <div class="search-modal__box">
+    <div class="search-modal__header">
+      <span class="search-modal__label">Search LoopholeDB</span>
+      <button class="search-modal__close" id="searchClose" aria-label="Close search">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+        </svg>
+        <kbd>Esc</kbd>
+      </button>
+    </div>
+
+    <div id="pagefind-ui"></div>
+
+    <p class="search-modal__hint">
+      Tip: try searching <em>"hospital bill"</em>, <em>"roth IRA"</em>, or <em>"eviction"</em>
+    </p>
+  </div>
+</div>
+
+<style>
+  /* ── Pagefind theme ───────────────────────────────── */
+  #pagefind-ui {
+    --pagefind-ui-scale:         1;
+    --pagefind-ui-primary:       var(--color-brown-cta);
+    --pagefind-ui-text:          var(--color-text-dark);
+    --pagefind-ui-background:    var(--color-cream);
+    --pagefind-ui-border:        var(--color-border);
+    --pagefind-ui-tag:           var(--color-cream-dark);
+    --pagefind-ui-border-width:  1px;
+    --pagefind-ui-border-radius: 4px;
+    --pagefind-ui-font:          'DM Sans', system-ui, sans-serif;
+  }
+
+  /* Override Pagefind's default input styles */
+  #pagefind-ui .pagefind-ui__search-input {
+    background: var(--color-cream-dark);
+    font-size: 1.05rem;
+  }
+  #pagefind-ui .pagefind-ui__result-link {
+    color: var(--color-brown-cta);
+  }
+  #pagefind-ui .pagefind-ui__result {
+    border-color: var(--color-border);
+  }
+
+  /* ── Modal overlay ────────────────────────────────── */
+  .search-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: clamp(3rem, 8vh, 7rem);
+    padding-inline: 1rem;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .search-modal.is-open {
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* ── Backdrop ─────────────────────────────────────── */
+  .search-modal__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 18, 8, 0.6);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .search-modal.is-open .search-modal__backdrop {
+    opacity: 1;
+  }
+
+  /* ── Box ──────────────────────────────────────────── */
+  .search-modal__box {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 660px;
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+    overflow: hidden;
+    transform: translateY(-12px);
+    opacity: 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .search-modal.is-open .search-modal__box {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* ── Header ───────────────────────────────────────── */
+  .search-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .search-modal__label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .search-modal__close {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--text-xs);
+    transition: color var(--transition);
+    padding: 0.25rem;
+  }
+  .search-modal__close:hover { color: var(--color-text-dark); }
+  kbd {
+    font-size: 0.65rem;
+    font-family: inherit;
+    background: var(--color-cream-dark);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 0.1rem 0.35rem;
+    color: var(--color-text-muted);
+  }
+
+  /* ── Hint ─────────────────────────────────────────── */
+  .search-modal__hint {
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+  .search-modal__hint em {
+    font-style: normal;
+    color: var(--color-text-mid);
+    font-weight: 500;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const modal    = document.getElementById('searchModal');
+    const backdrop = document.getElementById('searchBackdrop');
+    const closeBtn = document.getElementById('searchClose');
+    let   loaded   = false;
+
+    async function loadPagefind() {
+      if (loaded) return;
+      loaded = true;
+      try {
+        // Inject Pagefind CSS
+        const link = document.createElement('link');
+        link.rel  = 'stylesheet';
+        link.href = '/_pagefind/pagefind-ui.css';
+        document.head.appendChild(link);
+
+        // Load Pagefind UI script then initialise
+        await import('/_pagefind/pagefind-ui.js');
+        new window.PagefindUI({
+          element:        '#pagefind-ui',
+          showSubResults: true,
+          showImages:     false,
+          resetStyles:    false,
+        });
+
+        // Auto-focus the input
+        const input = document.querySelector('#pagefind-ui input');
+        if (input) input.focus();
+      } catch (e) {
+        document.getElementById('pagefind-ui').innerHTML =
+          '<p style="padding:1.25rem;color:var(--color-text-muted);font-size:.875rem;">Search is available after the site is built. Run <code>npm run build</code> first.</p>';
+      }
+    }
+
+    function openSearch() {
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      loadPagefind().then(() => {
+        const input = document.querySelector('#pagefind-ui input');
+        if (input) setTimeout(() => input.focus(), 50);
+      });
+    }
+
+    function closeSearch() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    // Expose opener for the nav button
+    window.openSearch = openSearch;
+
+    backdrop?.addEventListener('click', closeSearch);
+    closeBtn?.addEventListener('click', closeSearch);
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        modal.classList.contains('is-open') ? closeSearch() : openSearch();
+      }
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeSearch();
+      }
+    });
+  })();
+</script>

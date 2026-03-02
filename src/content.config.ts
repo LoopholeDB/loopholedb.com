@@ -15,4 +15,18 @@ const loopholes = defineCollection({
   }),
 });
 
-export const collections = { loopholes };
+const loopholes_ca = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './LHDB/ca' }),
+  schema: z.object({
+    title: z.string(),
+    slug: z.string().optional(),
+    category: z.string(),
+    country: z.string(),
+    summary: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    difficulty: z.string(),
+    lastUpdated: z.string(),
+  }),
+});
+
+export const collections = { loopholes, loopholes_ca };

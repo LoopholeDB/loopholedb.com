@@ -5,11 +5,12 @@ import Nav from '../../../components/Nav.astro';
 import Footer from '../../../components/Footer.astro';
 
 export async function getStaticPaths() {
-  const loopholes = await getCollection('loopholes');
+  const loopholes = await getCollection('loopholes_ca');
 
-  // Group entries by category slug
+  // CA entries use frontmatter `category` (slug form) and `slug` fields.
+  // The glob loader sets entry.id = frontmatter slug when present.
   const byCategory = loopholes.reduce<Record<string, typeof loopholes>>((acc, entry) => {
-    const cat = entry.id.split('/')[0];
+    const cat = entry.data.category;
     (acc[cat] ??= []).push(entry);
     return acc;
   }, {});
@@ -35,47 +36,61 @@ const categoryIcons: Record<string, string> = {
   'travel':                 '✈️',
 };
 
+const categoryLabels: Record<string, string> = {
+  'consumer-rights':        'Consumer Rights',
+  'digital-privacy':        'Digital Privacy',
+  'education':              'Education',
+  'employment-labor':       'Employment & Labour',
+  'estate-planning':        'Estate Planning',
+  'financial-tax':          'Financial & Tax',
+  'government-bureaucracy': 'Government & Bureaucracy',
+  'healthcare':             'Healthcare',
+  'housing-real-estate':    'Housing & Real Estate',
+  'insurance':              'Insurance',
+  'small-business':         'Small Business',
+  'travel':                 'Travel',
+};
+
 const categoryDescriptions: Record<string, string> = {
-  'consumer-rights':        'Know your rights as a buyer. Chargebacks, warranties, refunds, and protections against deceptive practices.',
-  'digital-privacy':        'Data rights, surveillance law, platform accountability, and what companies can legally do with your information.',
-  'education':              'Student rights, disability accommodations, disciplinary procedures, and financial aid rules.',
-  'employment-labor':       'Wages, wrongful termination, workplace safety, non-competes, and employee classification rules.',
-  'estate-planning':        'Wills, trusts, probate, power of attorney, and what happens to assets when there is no plan.',
-  'financial-tax':          'Tax obligations, IRS procedures, debt collection limits, bankruptcy rules, and financial disclosures.',
-  'government-bureaucracy': 'FOIA requests, administrative appeals, licensing disputes, and navigating federal and state agencies.',
-  'healthcare':             'Billing rights, surprise charges, insurance denials, HIPAA, and hospital charity care programs.',
-  'housing-real-estate':    'Tenant protections, eviction rules, fair housing, zoning, and landlord disclosure requirements.',
-  'insurance':              'Policy obligations, claim denials, bad faith practices, and what insurers must cover by law.',
-  'small-business':         'Business formation, contracts, licensing, liability, and regulatory compliance for entrepreneurs.',
-  'travel':                 'Passenger rights, flight delays, hotel disputes, visa rules, and travel insurance coverage.',
+  'consumer-rights':        'Know your rights as a buyer under federal and provincial consumer protection law. Chargebacks, warranties, refunds, and protections against unfair practices.',
+  'digital-privacy':        'Your rights under PIPEDA and provincial privacy laws. Data access requests, breach notification, and what companies can legally do with your information.',
+  'education':              'Student rights, RESP strategies, disability accommodations, and maximizing government education grants and tax credits.',
+  'employment-labor':       'Wages, wrongful dismissal, workplace safety, and employee vs. contractor classification under federal and provincial law.',
+  'estate-planning':        'Wills, trusts, probate, powers of attorney, and beneficiary strategies to minimise tax and transfer wealth efficiently.',
+  'financial-tax':          'CRA procedures, RRSP/TFSA/FHSA strategies, deductions, credits, and tax obligations for individuals and families.',
+  'government-bureaucracy': 'Access to Information requests, administrative appeals, licensing disputes, and navigating federal and provincial agencies.',
+  'healthcare':             'Provincial health coverage, disability tax credits, private insurance disputes, and rights when dealing with the healthcare system.',
+  'housing-real-estate':    'Tenant protections, eviction rules, the Principal Residence Exemption, FHSA strategies, and landlord disclosure requirements.',
+  'insurance':              'Policy obligations, claim denials, bad faith practices, and what Canadian insurers must cover by law.',
+  'small-business':         'Business formation, the Lifetime Capital Gains Exemption, contracts, licensing, and regulatory compliance for Canadian entrepreneurs.',
+  'travel':                 'Passenger rights under APPR, flight delay compensation, hotel disputes, and travel insurance coverage for Canadians.',
 };
 
 const difficultyOrder: Record<string, number> = {
-  'Easy': 0, 'Easy-Intermediate': 1, 'Intermediate': 2, 'Advanced': 3,
+  'easy': 0, 'easy-intermediate': 1, 'medium': 2, 'intermediate': 2, 'hard': 3, 'advanced': 3,
 };
 
 const { categorySlug, entries } = Astro.props;
 
-// Derive display name from the first entry's category field
-const categoryLabel = entries[0]?.data.category ?? categorySlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+const categoryLabel = categoryLabels[categorySlug] ?? categorySlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 const icon = categoryIcons[categorySlug] ?? '⚖️';
 const description = categoryDescriptions[categorySlug] ?? '';
 
 const sorted = [...entries].sort(
-  (a, b) => (difficultyOrder[a.data.difficulty] ?? 99) - (difficultyOrder[b.data.difficulty] ?? 99)
+  (a, b) => (difficultyOrder[a.data.difficulty.toLowerCase()] ?? 99) - (difficultyOrder[b.data.difficulty.toLowerCase()] ?? 99)
 );
 
-const riskColour: Record<string, string> = {
-  None: 'chip--green', Low: 'chip--green', Intermediate: 'chip--amber', High: 'chip--red',
-};
+function capitalize(s: string) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
 
-const pageUrl = `https://loopholedb.com/us/${categorySlug}`;
+const pageUrl = `https://loopholedb.com/ca/${categorySlug}`;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
       '@type': 'CollectionPage',
-      'name': `${categoryLabel} Legal Loopholes (US) — LoopholeDB`,
+      'name': `${categoryLabel} Legal Loopholes (Canada) — LoopholeDB`,
       'url': pageUrl,
       'description': description,
     },
@@ -83,7 +98,7 @@ const jsonLd = {
       '@type': 'BreadcrumbList',
       'itemListElement': [
         { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://loopholedb.com' },
-        { '@type': 'ListItem', 'position': 2, 'name': 'United States', 'item': 'https://loopholedb.com/us' },
+        { '@type': 'ListItem', 'position': 2, 'name': 'Canada', 'item': 'https://loopholedb.com/ca' },
         { '@type': 'ListItem', 'position': 3, 'name': categoryLabel, 'item': pageUrl },
       ],
     },
@@ -92,8 +107,8 @@ const jsonLd = {
 ---
 
 <Layout
-  title={`${categoryLabel} Legal Loopholes (US) — LoopholeDB`}
-  description={`Browse ${sorted.length} free plain-English guides to US legal loopholes in ${categoryLabel}. ${description}`}
+  title={`${categoryLabel} Legal Loopholes (Canada) — LoopholeDB`}
+  description={`Browse ${sorted.length} free plain-English guides to Canadian legal loopholes in ${categoryLabel}. ${description}`}
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <Nav />
@@ -113,7 +128,7 @@ const jsonLd = {
         <div class="cat-hero__top">
           <div class="cat-icon">{icon}</div>
           <div>
-            <span class="eyebrow">Legal Category</span>
+            <span class="eyebrow">Legal Category · Canada</span>
             <h1 class="t-h1 cat-hero__title">{categoryLabel}</h1>
           </div>
         </div>
@@ -122,7 +137,7 @@ const jsonLd = {
 
         <div class="cat-hero__meta">
           <span class="meta-pill">{sorted.length} {sorted.length === 1 ? 'Loophole' : 'Loopholes'}</span>
-          <span class="meta-pill">United States</span>
+          <span class="meta-pill">🇨🇦 Canada</span>
           <span class="meta-pill">Free Access</span>
         </div>
       </div>
@@ -134,30 +149,26 @@ const jsonLd = {
         <div class="list-header">
           <h2 class="t-h2">Available Loopholes</h2>
           <p class="t-body">
-            Each entry below is a plain-English guide to a specific legal right, rule,
-            or workaround — including the exact laws that back it up.
+            Each entry below is a plain-English guide to a specific Canadian legal right, rule,
+            or workaround — including the exact laws and regulations that back it up.
           </p>
         </div>
 
         <div class="lh-grid">
           {sorted.map(entry => {
-            const slug = entry.id.split('/')[1];
-            const { title, difficulty, risk_level, potential_savings, applicable_states } = entry.data;
+            const slug = entry.id; // entry.id = frontmatter slug for CA entries
+            const { title, difficulty, summary } = entry.data;
             return (
-              <a href={`/us/${categorySlug}/${slug}`} class="lh-card">
+              <a href={`/ca/${categorySlug}/${slug}`} class="lh-card">
                 <div class="lh-card__header">
-                  <span class={`chip ${riskColour[risk_level] ?? 'chip--amber'}`}>{risk_level} Risk</span>
-                  <span class="chip chip--neutral">{difficulty}</span>
+                  <span class="chip chip--neutral">{capitalize(difficulty)}</span>
                 </div>
                 <h3 class="lh-card__title">{title}</h3>
-                {potential_savings && (
-                  <p class="lh-card__savings">
-                    <span class="savings-label">Potential savings</span>
-                    {potential_savings}
-                  </p>
+                {summary && (
+                  <p class="lh-card__summary">{summary}</p>
                 )}
                 <div class="lh-card__footer">
-                  <span class="lh-card__states">{applicable_states === 'All' ? 'All U.S. States' : applicable_states}</span>
+                  <span class="lh-card__region">🇨🇦 All Provinces & Territories</span>
                   <span class="lh-card__cta">Read Guide →</span>
                 </div>
               </a>
@@ -308,9 +319,6 @@ const jsonLd = {
     border-radius: 100px;
     border: 1px solid transparent;
   }
-  .chip--green   { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
-  .chip--amber   { background: #fffbeb; color: #92400e; border-color: #fde68a; }
-  .chip--red     { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
   .chip--neutral { background: var(--color-cream-dark); color: var(--color-text-mid); border-color: var(--color-border); }
 
   .lh-card__title {
@@ -322,19 +330,14 @@ const jsonLd = {
     flex: 1;
   }
 
-  .lh-card__savings {
+  .lh-card__summary {
     font-size: var(--text-sm);
     color: var(--color-text-mid);
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-  }
-  .savings-label {
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
+    line-height: 1.65;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .lh-card__footer {
@@ -346,7 +349,7 @@ const jsonLd = {
     border-top: 1px solid var(--color-border);
     font-size: var(--text-xs);
   }
-  .lh-card__states { color: var(--color-text-muted); font-weight: 500; }
+  .lh-card__region { color: var(--color-text-muted); font-weight: 500; }
   .lh-card__cta {
     color: var(--color-brown-cta);
     font-weight: 600;

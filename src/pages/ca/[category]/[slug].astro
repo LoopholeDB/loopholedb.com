@@ -5,33 +5,39 @@ import Nav from '../../../components/Nav.astro';
 import Footer from '../../../components/Footer.astro';
 
 export async function getStaticPaths() {
-  const loopholes = await getCollection('loopholes');
-  return loopholes.map(entry => {
-    const parts = entry.id.split('/');
-    const category = parts[0];
-    const slug = parts[1];
-    return { params: { category, slug }, props: { entry } };
-  });
+  const loopholes = await getCollection('loopholes_ca');
+  // CA entries: entry.id = frontmatter slug, entry.data.category = category slug
+  return loopholes.map(entry => ({
+    params: { category: entry.data.category, slug: entry.id },
+    props: { entry },
+  }));
 }
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { title, category, difficulty, risk_level, applicable_states, last_verified, potential_savings } = entry.data;
+const { title, category, difficulty, summary, lastUpdated, tags } = entry.data;
 
-const riskColour: Record<string, string> = {
-  None:         'badge--green',
-  Low:          'badge--green',
-  Intermediate: 'badge--amber',
-  High:         'badge--red',
+const categoryLabels: Record<string, string> = {
+  'consumer-rights':        'Consumer Rights',
+  'digital-privacy':        'Digital Privacy',
+  'education':              'Education',
+  'employment-labor':       'Employment & Labour',
+  'estate-planning':        'Estate Planning',
+  'financial-tax':          'Financial & Tax',
+  'government-bureaucracy': 'Government & Bureaucracy',
+  'healthcare':             'Healthcare',
+  'housing-real-estate':    'Housing & Real Estate',
+  'insurance':              'Insurance',
+  'small-business':         'Small Business',
+  'travel':                 'Travel',
 };
-const badgeClass = riskColour[risk_level] ?? 'badge--amber';
 
-const categorySlug = entry.id.split('/')[0];
-const categoryLabel = category;
-const slug = entry.id.split('/')[1];
+const categorySlug = entry.data.category;
+const categoryLabel = categoryLabels[categorySlug] ?? category;
+const entrySlug = entry.id;
 
-const pageUrl  = `https://loopholedb.com/us/${categorySlug}/${slug}`;
-const metaDesc = `Learn how to use the "${title}" loophole. Plain-English guide covering who qualifies, how it works, and the legal basis. ${applicable_states === 'All' ? 'Applies to all US states.' : `Applies to: ${applicable_states}.`}`;
+const pageUrl  = `https://loopholedb.com/ca/${categorySlug}/${entrySlug}`;
+const metaDesc = summary ?? `Learn about the "${title}" loophole under Canadian law. Plain-English guide covering who qualifies, how it works, and the legal basis.`;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -41,7 +47,7 @@ const jsonLd = {
       'headline': title,
       'description': metaDesc,
       'url': pageUrl,
-      'dateModified': last_verified,
+      'dateModified': lastUpdated,
       'publisher': {
         '@type': 'Organization',
         'name': 'LoopholeDB',
@@ -56,13 +62,17 @@ const jsonLd = {
       '@type': 'BreadcrumbList',
       'itemListElement': [
         { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://loopholedb.com' },
-        { '@type': 'ListItem', 'position': 2, 'name': 'United States', 'item': 'https://loopholedb.com/us' },
-        { '@type': 'ListItem', 'position': 3, 'name': categoryLabel, 'item': `https://loopholedb.com/us/${categorySlug}` },
+        { '@type': 'ListItem', 'position': 2, 'name': 'Canada', 'item': 'https://loopholedb.com/ca' },
+        { '@type': 'ListItem', 'position': 3, 'name': categoryLabel, 'item': `https://loopholedb.com/ca/${categorySlug}` },
         { '@type': 'ListItem', 'position': 4, 'name': title, 'item': pageUrl },
       ],
     },
   ],
 };
+
+function capitalize(s: string) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
 ---
 
 <Layout
@@ -79,36 +89,26 @@ const jsonLd = {
         <nav class="breadcrumb" aria-label="Breadcrumb">
           <a href="/">Home</a>
           <span aria-hidden="true">›</span>
-          <a href={`/us/${categorySlug}`}>{categoryLabel}</a>
+          <a href={`/ca/${categorySlug}`}>{categoryLabel}</a>
           <span aria-hidden="true">›</span>
           <span>{title}</span>
         </nav>
 
-        <span class="eyebrow">{categoryLabel}</span>
+        <span class="eyebrow">{categoryLabel} · 🇨🇦 Canada</span>
         <h1 class="t-h1 lh-hero__title">{title}</h1>
 
         <div class="lh-badges">
           <span class="badge">
             <span class="badge__label">Difficulty</span>
-            <span class="badge__val">{difficulty}</span>
-          </span>
-          <span class={`badge ${badgeClass}`}>
-            <span class="badge__label">Risk</span>
-            <span class="badge__val">{risk_level}</span>
+            <span class="badge__val">{capitalize(difficulty)}</span>
           </span>
           <span class="badge">
             <span class="badge__label">Applies To</span>
-            <span class="badge__val">{applicable_states}</span>
+            <span class="badge__val">All Provinces & Territories</span>
           </span>
-          {potential_savings && (
-            <span class="badge badge--highlight">
-              <span class="badge__label">Potential Savings</span>
-              <span class="badge__val">{potential_savings}</span>
-            </span>
-          )}
           <span class="badge badge--muted">
-            <span class="badge__label">Last Verified</span>
-            <span class="badge__val">{last_verified}</span>
+            <span class="badge__label">Last Updated</span>
+            <span class="badge__val">{lastUpdated}</span>
           </span>
         </div>
       </div>
@@ -126,29 +126,32 @@ const jsonLd = {
             <h2 class="sidebar-card__heading">Quick Facts</h2>
             <dl class="sidebar-dl">
               <div>
-                <dt>Difficulty</dt>
-                <dd>{difficulty}</dd>
+                <dt>Jurisdiction</dt>
+                <dd>🇨🇦 Canada</dd>
               </div>
               <div>
-                <dt>Risk Level</dt>
-                <dd>{risk_level}</dd>
+                <dt>Difficulty</dt>
+                <dd>{capitalize(difficulty)}</dd>
               </div>
               <div>
                 <dt>Applies To</dt>
-                <dd>{applicable_states}</dd>
+                <dd>All Provinces & Territories</dd>
               </div>
-              {potential_savings && (
-                <div>
-                  <dt>Potential Savings</dt>
-                  <dd>{potential_savings}</dd>
-                </div>
-              )}
               <div>
-                <dt>Last Verified</dt>
-                <dd>{last_verified}</dd>
+                <dt>Last Updated</dt>
+                <dd>{lastUpdated}</dd>
               </div>
             </dl>
           </div>
+
+          {tags && tags.length > 0 && (
+            <div class="sidebar-card">
+              <h2 class="sidebar-card__heading">Tags</h2>
+              <div class="sidebar-tags">
+                {tags.map(tag => <span class="sidebar-tag">{tag}</span>)}
+              </div>
+            </div>
+          )}
 
           <div class="sidebar-card sidebar-card--cta">
             <h2 class="sidebar-card__heading">Need Specific Help?</h2>
@@ -227,11 +230,7 @@ const jsonLd = {
     font-weight: 500;
     color: var(--color-cream);
   }
-  .badge--green  { border-color: rgba(134,239,172,0.25); background: rgba(134,239,172,0.07); }
-  .badge--amber  { border-color: rgba(252,211,77,0.25);  background: rgba(252,211,77,0.07); }
-  .badge--red    { border-color: rgba(252,165,165,0.25); background: rgba(252,165,165,0.07); }
-  .badge--highlight { border-color: rgba(242,235,224,0.25); background: rgba(242,235,224,0.09); }
-  .badge--muted  { opacity: 0.7; }
+  .badge--muted { opacity: 0.7; }
 
   /* ── Content layout ───────────────────────────────── */
   .lh-content__inner {
@@ -242,10 +241,8 @@ const jsonLd = {
   }
 
   /* ── Prose ────────────────────────────────────────── */
-  .prose {
-    min-width: 0;
-  }
-  .prose :global(h1) { display: none; } /* title already shown in hero */
+  .prose { min-width: 0; }
+  .prose :global(h1) { display: none; }
 
   .prose :global(h2) {
     font-family: var(--font-display);
@@ -306,6 +303,26 @@ const jsonLd = {
     transition: text-decoration-color var(--transition);
   }
   .prose :global(a:hover) { text-decoration-color: var(--color-brown-cta); }
+
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+    margin-bottom: 1.5rem;
+  }
+  .prose :global(th) {
+    text-align: left;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    padding: 0.6rem 0.75rem;
+    border-bottom: 2px solid var(--color-border);
+  }
+  .prose :global(td) {
+    color: var(--color-text-mid);
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: top;
+  }
 
   /* ── Sidebar ──────────────────────────────────────── */
   .lh-sidebar {
@@ -369,6 +386,23 @@ const jsonLd = {
     color: var(--color-text-dark);
     font-weight: 500;
     text-align: right;
+  }
+
+  .sidebar-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .sidebar-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-mid);
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
+    padding: 0.2rem 0.6rem;
   }
 
   .sidebar-back {

@@ -1,9 +1,9 @@
 ---
+import Search from './Search.astro';
+
 const links = [
-  { label: 'Home',        href: '#home' },
-  { label: 'Categories',  href: '#services' },
-  { label: 'How It Works',href: '#database' },
-  { label: 'Contact',     href: '#contact' },
+  { label: 'Categories', href: '/us', id: 'nav-categories' },
+  { label: 'Submit',     href: '/submit' },
 ];
 ---
 
@@ -13,11 +13,25 @@ const links = [
 
     <ul class="nav__links">
       {links.map(l => (
-        <li><a href={l.href}>{l.label}</a></li>
+        <li><a href={l.href} id={l.id ?? ''}>{l.label}</a></li>
       ))}
     </ul>
 
-    <a href="#services" class="btn btn--primary nav__cta">Browse Database</a>
+    <button class="nav__search" onclick="window.openSearch()" aria-label="Search (Ctrl+K)">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span class="nav__search-label">Search</span>
+      <kbd class="nav__search-kbd">⌘K</kbd>
+    </button>
+
+    <div class="nav__region" id="regionToggle" role="group" aria-label="Select region">
+      <button class="nav__region-btn" data-region="us" aria-pressed="false">🇺🇸 US</button>
+      <button class="nav__region-btn" data-region="ca" aria-pressed="false">🇨🇦 CA</button>
+    </div>
+
+    <a href="/us" class="btn btn--primary nav__cta" id="nav-cta">Browse Database</a>
 
     <!-- Mobile toggle (progressive enhancement) -->
     <button class="nav__burger" aria-label="Open menu" id="navToggle">
@@ -25,6 +39,8 @@ const links = [
     </button>
   </nav>
 </header>
+
+<Search />
 
 <style>
   .nav-wrap {
@@ -67,6 +83,76 @@ const links = [
     transition: color var(--transition);
   }
   .nav__links a:hover { color: var(--color-text-dark); }
+  .nav__links a[href="/submit"] {
+    color: var(--color-brown-cta);
+    font-weight: 700;
+  }
+  .nav__links a[href="/submit"]:hover { color: var(--color-text-dark); }
+
+  .nav__search {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: var(--color-cream-dark);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 0.4rem 0.75rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: border-color var(--transition), color var(--transition);
+    white-space: nowrap;
+  }
+  .nav__search:hover {
+    border-color: var(--color-brown-mid);
+    color: var(--color-text-dark);
+  }
+  .nav__search-kbd {
+    font-size: 0.65rem;
+    font-family: inherit;
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 0.05rem 0.3rem;
+    color: var(--color-text-muted);
+    margin-left: 0.1rem;
+  }
+  @media (max-width: 768px) {
+    .nav__search-label,
+    .nav__search-kbd { display: none; }
+  }
+
+  .nav__region {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: var(--color-border);
+    border-radius: 999px;
+    padding: 3px;
+  }
+
+  .nav__region-btn {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-text-mid);
+    transition: background var(--transition), color var(--transition);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .nav__region-btn[aria-pressed="true"] {
+    background: var(--color-cream);
+    color: var(--color-text-dark);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .nav__region-btn:hover:not([aria-pressed="true"]) {
+    color: var(--color-text-dark);
+  }
 
   .nav__burger {
     display: none;
@@ -91,6 +177,44 @@ const links = [
 </style>
 
 <script>
+  // Region toggle
+  const regionBtns = document.querySelectorAll<HTMLButtonElement>('.nav__region-btn');
+
+  function getRegion(): string {
+    const match = window.location.pathname.match(/^\/(us|ca)/);
+    return match ? match[1] : (localStorage.getItem('lhdb-region') ?? 'us');
+  }
+
+  function setActiveBtn(region: string) {
+    regionBtns.forEach(btn => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.region === region));
+    });
+  }
+
+  function setRegionLinks(region: string) {
+    const cats = document.getElementById('nav-categories') as HTMLAnchorElement | null;
+    const cta  = document.getElementById('nav-cta')        as HTMLAnchorElement | null;
+    if (cats) cats.href = `/${region}`;
+    if (cta)  cta.href  = `/${region}`;
+  }
+
+  function switchRegion(toRegion: string) {
+    localStorage.setItem('lhdb-region', toRegion);
+    window.location.pathname = `/${toRegion}`;
+  }
+
+  const region = getRegion();
+  setActiveBtn(region);
+  setRegionLinks(region);
+
+  regionBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const region = btn.dataset.region;
+      if (region) switchRegion(region);
+    });
+  });
+
+  // Nav burger toggle
   const toggle = document.getElementById('navToggle');
   const links  = document.querySelector('.nav__links') as HTMLElement | null;
   const cta    = document.querySelector('.nav__cta')   as HTMLElement | null;

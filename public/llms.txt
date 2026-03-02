@@ -1,0 +1,46 @@
+# LoopholeDB
+
+> A free, plain-English database of legal loopholes, rights, and workarounds — built to give everyone access to the same legal advantages the wealthy take for granted. Currently covers United States and Canadian law across 12 categories.
+
+LoopholeDB publishes structured, plain-English guides to specific legal rights, tax strategies, regulatory workarounds, and consumer protections. Each entry explains what the loophole is, how to use it, who qualifies, and the exact statute, regulation, or court ruling that backs it up. Content is written for non-lawyers and verified by date. LoopholeDB is not a law firm and does not provide legal advice.
+
+## United States — Browse by Category
+
+- [US Legal Loopholes — Home](https://loopholedb.com/us): All US categories and entry counts
+- [Consumer Rights (US)](https://loopholedb.com/us/consumer-rights): Chargebacks, warranties, refunds, and protections against deceptive practices
+- [Digital Privacy (US)](https://loopholedb.com/us/digital-privacy): Data rights, surveillance law, platform accountability, data broker opt-outs
+- [Education (US)](https://loopholedb.com/us/education): Student rights, 529 rollovers, disability accommodations, financial aid rules
+- [Employment & Labor (US)](https://loopholedb.com/us/employment-labor): Wages, wrongful termination, overtime misclassification, non-competes
+- [Estate Planning (US)](https://loopholedb.com/us/estate-planning): Wills, trusts, transfer-on-death accounts, probate avoidance
+- [Financial & Tax (US)](https://loopholedb.com/us/financial-tax): IRS procedures, backdoor Roth IRA, tax deductions, debt collection limits
+- [Government & Bureaucracy (US)](https://loopholedb.com/us/government-bureaucracy): FOIA requests, administrative appeals, licensing disputes, federal agencies
+- [Healthcare (US)](https://loopholedb.com/us/healthcare): Hospital charity care, billing rights, surprise charges, insurance denials, HIPAA
+- [Housing & Real Estate (US)](https://loopholedb.com/us/housing-real-estate): Tenant protections, eviction rules, homestead exemption, fair housing
+- [Insurance (US)](https://loopholedb.com/us/insurance): Claim denials, diminished value claims, bad faith practices, coverage obligations
+- [Small Business (US)](https://loopholedb.com/us/small-business): Augusta Rule, business formation, contracts, liability, regulatory compliance
+- [Travel (US)](https://loopholedb.com/us/travel): Airline involuntary bumping compensation, passenger rights, flight delays
+
+## Canada — Browse by Category
+
+- [Canadian Legal Loopholes — Home](https://loopholedb.com/ca): All Canadian categories and entry counts
+- [Consumer Rights (Canada)](https://loopholedb.com/ca/consumer-rights): Federal and provincial consumer protection, chargebacks, refund rights
+- [Digital Privacy (Canada)](https://loopholedb.com/ca/digital-privacy): PIPEDA, personal data access rights, breach notification, platform accountability
+- [Education (Canada)](https://loopholedb.com/ca/education): RESP strategies, RRSP conversion, government education grants, tax credits
+- [Employment & Labour (Canada)](https://loopholedb.com/ca/employment-labor): CPP/EI misclassification, wrongful dismissal, provincial employment standards
+- [Estate Planning (Canada)](https://loopholedb.com/ca/estate-planning): Beneficiary designations, probate bypass, powers of attorney, trust strategies
+- [Financial & Tax (Canada)](https://loopholedb.com/ca/financial-tax): Smith Manoeuvre, CRA procedures, RRSP/TFSA/FHSA strategies, tax deductions
+- [Government & Bureaucracy (Canada)](https://loopholedb.com/ca/government-bureaucracy): Access to Information requests, administrative appeals, federal and provincial agencies
+- [Healthcare (Canada)](https://loopholedb.com/ca/healthcare): Disability Tax Credit, Medical Expense Tax Credit, provincial health coverage
+- [Housing & Real Estate (Canada)](https://loopholedb.com/ca/housing-real-estate): Principal Residence Exemption, FHSA strategies, tenant protections
+- [Insurance (Canada)](https://loopholedb.com/ca/insurance): Diminished value claims, claim denials, bad faith practices, Canadian insurer obligations
+- [Small Business (Canada)](https://loopholedb.com/ca/small-business): Lifetime Capital Gains Exemption, business formation, CRA compliance
+- [Travel (Canada)](https://loopholedb.com/ca/travel): APPR passenger rights, flight delay compensation, airline obligations
+
+## Legal & Site Information
+
+- [Legal Disclaimer](https://loopholedb.com/disclaimer): Accuracy, jurisdiction, and outcome disclaimers — content is informational only, not legal advice
+- [Submit a Loophole](https://loopholedb.com/submit): Community submission form for new loopholes
+
+## Optional
+
+- [LoopholeDB Homepage](https://loopholedb.com): Main landing page with site overview

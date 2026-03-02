@@ -2,7 +2,7 @@
 const links = {
   company: ['About', 'Careers', 'Blog', 'Press'],
   categories: ['Consumer Rights', 'Housing', 'Healthcare', 'Employment', 'Small Business'],
-  legal: ['Privacy Policy', 'Terms of Service', 'Cookie Policy'],
+  legal: ['Privacy Policy', 'Terms of Service', 'Cookie Policy', 'Disclaimer'],
 };
 ---
 
@@ -17,7 +17,12 @@ const links = {
       </p>
       <p class="footer__email">
         <span class="eyebrow" style="margin-bottom:0.25rem; display:block;">Get in touch</span>
-        <a href="mailto:hello@loopholedb.com" class="footer__mail">hello@loopholedb.com</a>
+        <a href="mailto:followmoney.ca@gmail.com" class="footer__mail">followmoney.ca@gmail.com</a>
+      </p>
+      <p class="footer__geo">
+        🇺🇸 🇨🇦 Currently covering <strong>US and Canada</strong>. We're expanding to more countries soon —
+        <a href="mailto:followmoney.ca@gmail.com?subject=Country%20Request">send us a request</a>
+        if you'd like us to cover your country.
       </p>
     </div>
 
@@ -37,11 +42,28 @@ const links = {
       <div class="footer__col">
         <p class="footer__col-title">Legal</p>
         <ul>
-          {links.legal.map(l => <li><a href="#">{l}</a></li>)}
+          {links.legal.map(l => (
+            <li>
+              <a href={l === 'Disclaimer' ? '/disclaimer' : '#'}>{l}</a>
+            </li>
+          ))}
         </ul>
       </div>
     </nav>
 
+  </div>
+
+  <div class="container footer__disclaimer">
+    <p>
+      <strong>Legal Disclaimer:</strong> Information on LoopholeDB.com is for general
+      informational and educational purposes only. It does not constitute legal advice and
+      must not be relied upon as such. No attorney-client relationship is formed by use of
+      this site. Content reflects the law as of the date last verified and may not be current —
+      laws change frequently and vary by jurisdiction. Nothing on this site guarantees any
+      legal outcome. LoopholeDB expressly disclaims all liability for any loss arising from
+      reliance on information published here. Use of this site is at your own risk.
+      <a href="/disclaimer">Read our full disclaimer →</a>
+    </p>
   </div>
 
   <div class="container footer__bottom">
@@ -120,6 +142,50 @@ const links = {
     transition: color var(--transition);
   }
   .footer__col a:hover { color: var(--color-cream); }
+
+  .footer__geo {
+    margin-top: 1.5rem;
+    font-size: var(--text-xs);
+    color: rgba(242,235,224,0.55);
+    line-height: 1.6;
+    max-width: 34ch;
+  }
+  .footer__geo strong { color: rgba(242,235,224,0.8); font-weight: 600; }
+  .footer__geo a {
+    color: rgba(242,235,224,0.75);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: rgba(242,235,224,0.3);
+    transition: color var(--transition);
+  }
+  .footer__geo a:hover { color: var(--color-cream); }
+
+  .footer__disclaimer {
+    padding-block: 1.25rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .footer__disclaimer p {
+    font-size: 0.7rem;
+    line-height: 1.65;
+    color: rgba(242,235,224,0.3);
+    max-width: 100%;
+  }
+  .footer__disclaimer strong {
+    color: rgba(242,235,224,0.45);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.65rem;
+  }
+  .footer__disclaimer a {
+    color: rgba(242,235,224,0.45);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: rgba(242,235,224,0.2);
+    transition: color var(--transition);
+    white-space: nowrap;
+  }
+  .footer__disclaimer a:hover { color: rgba(242,235,224,0.7); }
 
   .footer__bottom {
     display: flex;

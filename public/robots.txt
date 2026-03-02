@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /404
+
+Sitemap: https://loopholedb.com/sitemap-index.xml
+LLMs: https://loopholedb.com/llms.txt
