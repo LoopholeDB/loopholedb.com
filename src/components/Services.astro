@@ -65,13 +65,71 @@ const categories = fs.readdirSync(lhdbPath, { withFileTypes: true })
           <div class="service-card__icon">{s.icon}</div>
           <h3 class="t-h3 service-card__title">{s.title}</h3>
           <p class="t-sm service-card__body">{s.body}</p>
-          <a href={`/us/${s.slug}`} class="btn btn--link">Learn More →</a>
+          <button class="btn btn--link country-trigger" data-category={s.slug}>Learn More →</button>
         </article>
       ))}
     </div>
 
   </div>
 </section>
+
+<!-- Country picker modal -->
+<div id="country-modal" class="modal-backdrop" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal__close" id="modal-close" aria-label="Close">✕</button>
+    <p class="eyebrow" style="margin-bottom:0.25rem">Choose your country</p>
+    <h2 class="t-h2" id="modal-title">Where are you located?</h2>
+    <p class="t-sm" style="margin-top:0.5rem;margin-bottom:2rem">We'll show you loopholes that apply to your jurisdiction.</p>
+    <div class="modal__options">
+      <button class="country-btn" data-country="us">
+        <span class="country-btn__flag">🇺🇸</span>
+        <span class="country-btn__name">United States</span>
+      </button>
+      <button class="country-btn" data-country="ca">
+        <span class="country-btn__flag">🇨🇦</span>
+        <span class="country-btn__name">Canada</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const backdrop = document.getElementById('country-modal')!;
+  const closeBtn = document.getElementById('modal-close')!;
+  let pendingCategory = '';
+
+  function openModal(category = '') {
+    pendingCategory = category;
+    backdrop.setAttribute('aria-hidden', 'false');
+    backdrop.classList.add('is-open');
+    closeBtn.focus();
+  }
+
+  function closeModal() {
+    backdrop.setAttribute('aria-hidden', 'true');
+    backdrop.classList.remove('is-open');
+    pendingCategory = '';
+  }
+
+  (window as any).openCountryPicker = openModal;
+
+  document.querySelectorAll<HTMLButtonElement>('.country-trigger').forEach(btn => {
+    btn.addEventListener('click', () => openModal(btn.dataset.category!));
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('.country-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const path = pendingCategory
+        ? `/${btn.dataset.country}/${pendingCategory}`
+        : `/${btn.dataset.country}`;
+      window.location.href = path;
+    });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+</script>
 
 <style>
   .services__header {
@@ -128,4 +186,78 @@ const categories = fs.readdirSync(lhdbPath, { withFileTypes: true })
   @media (min-width: 901px) and (max-width: 1200px) {
     .services__grid { grid-template-columns: repeat(2, 1fr); }
   }
+
+  /* ── Country picker modal ─────────────────────────────────── */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 18, 8, 0.55);
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .modal-backdrop.is-open { display: flex; }
+
+  .modal {
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 2.5rem 2.5rem 2rem;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+  }
+
+  .modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.25rem;
+  }
+  .modal__close:hover { color: var(--color-text-dark); }
+
+  .modal__options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .country-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.75rem 1rem;
+    background: var(--color-cream-dark);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  }
+  .country-btn:hover {
+    border-color: var(--color-brown-mid);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+
+  .country-btn__flag { font-size: 2.5rem; line-height: 1; }
+
+  .country-btn__name {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-dark);
+    letter-spacing: 0.04em;
+  }
+
+  .country-trigger { background: none; border: none; padding: 0; text-align: left; }
 </style>

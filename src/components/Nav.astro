@@ -31,7 +31,7 @@ const links = [
       <button class="nav__region-btn" data-region="ca" aria-pressed="false">🇨🇦 CA</button>
     </div>
 
-    <a href="/us" class="btn btn--primary nav__cta" id="nav-cta">Browse Database</a>
+    <button class="btn btn--primary nav__cta" id="nav-cta">Browse Database</button>
 
     <!-- Mobile toggle (progressive enhancement) -->
     <button class="nav__burger" aria-label="Open menu" id="navToggle">
@@ -193,9 +193,7 @@ const links = [
 
   function setRegionLinks(region: string) {
     const cats = document.getElementById('nav-categories') as HTMLAnchorElement | null;
-    const cta  = document.getElementById('nav-cta')        as HTMLAnchorElement | null;
     if (cats) cats.href = `/${region}`;
-    if (cta)  cta.href  = `/${region}`;
   }
 
   function switchRegion(toRegion: string) {
@@ -212,6 +210,10 @@ const links = [
       const region = btn.dataset.region;
       if (region) switchRegion(region);
     });
+  });
+
+  document.getElementById('nav-cta')?.addEventListener('click', () => {
+    (window as any).openCountryPicker?.();
   });
 
   // Nav burger toggle

@@ -1,3 +1,25 @@
 ---
-return Astro.redirect('/us', 302);
+import Layout    from '../layouts/Layout.astro';
+import Nav       from '../components/Nav.astro';
+import Hero      from '../components/Hero.astro';
+import Services  from '../components/Services.astro';
+import Attorneys from '../components/Attorneys.astro';
+import Benefits  from '../components/Benefits.astro';
+import CTAStrip  from '../components/CTAStrip.astro';
+import Footer    from '../components/Footer.astro';
 ---
+
+<Layout
+  title="LoopholeDB — Legal Loopholes for Everyone"
+  description="A free plain-English database of legal loopholes, rights, and workarounds — the same knowledge expensive lawyers charge thousands to provide."
+>
+  <Nav />
+  <main>
+    <Hero />
+    <Services />
+    <Attorneys />
+    <Benefits />
+    <CTAStrip />
+  </main>
+  <Footer />
+</Layout>
