@@ -7,6 +7,8 @@ potential_savings: "$1,000 - $100,000+"
 last_verified: "2026-02-10"
 applicable_states: "All (nonprofit hospitals)"
 risk_level: "None"
+template_url: "/us/healthcare/hospital-financial-assistance-letter"
+template_label: "Financial Assistance Request Letter"
 ---
 
 # Hospital Charity Care and Financial Assistance Programs

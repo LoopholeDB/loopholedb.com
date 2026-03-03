@@ -12,6 +12,8 @@ const loopholes = defineCollection({
     last_verified: z.string(),
     applicable_states: z.string(),
     risk_level: z.string(),
+    template_url: z.string().optional(),
+    template_label: z.string().optional(),
   }),
 });
 
@@ -26,6 +28,8 @@ const loopholes_ca = defineCollection({
     tags: z.array(z.string()).optional(),
     difficulty: z.string(),
     lastUpdated: z.string(),
+    template_url: z.string().optional(),
+    template_label: z.string().optional(),
   }),
 });
 

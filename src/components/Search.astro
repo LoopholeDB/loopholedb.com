@@ -177,11 +177,11 @@
         // Inject Pagefind CSS
         const link = document.createElement('link');
         link.rel  = 'stylesheet';
-        link.href = '/_pagefind/pagefind-ui.css';
+        link.href = '/pagefind/pagefind-ui.css';
         document.head.appendChild(link);
 
         // Load Pagefind UI script then initialise
-        await import('/_pagefind/pagefind-ui.js');
+        await import('/pagefind/pagefind-ui.js');
         new window.PagefindUI({
           element:        '#pagefind-ui',
           showSubResults: true,

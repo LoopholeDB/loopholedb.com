@@ -7,6 +7,8 @@ potential_savings: "$1,000 - $10,000+"
 last_verified: "2026-02-10"
 applicable_states: "Most states (Georgia is strongest; some states limit first-party claims)"
 risk_level: "Low"
+template_url: "/us/insurance/diminished-value-demand-letter"
+template_label: "Diminished Value Demand Letter"
 ---
 
 # Diminished Value Claims After a Car Accident

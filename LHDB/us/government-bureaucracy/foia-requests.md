@@ -7,6 +7,8 @@ potential_savings: "Free access to information often sold by third parties"
 last_verified: "2026-02-10"
 applicable_states: "All (federal level; states have their own open records laws)"
 risk_level: "None"
+template_url: "/us/government-bureaucracy/foia-request-letter"
+template_label: "FOIA Request Letter"
 ---
 
 # Freedom of Information Act (FOIA) Requests

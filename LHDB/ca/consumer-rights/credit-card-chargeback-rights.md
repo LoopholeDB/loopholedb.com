@@ -7,6 +7,8 @@ summary: "Canadian credit card holders have strong chargeback rights enforced by
 tags: ["credit card", "chargeback", "FCAC", "consumer protection", "fraud"]
 difficulty: "easy"
 lastUpdated: "2025-01-01"
+template_url: "/ca/consumer-rights/credit-card-dispute-letter"
+template_label: "Credit Card Dispute Letter"
 ---
 
 ## Overview

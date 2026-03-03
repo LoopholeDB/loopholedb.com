@@ -7,6 +7,8 @@ potential_savings: "$2,000 - $15,000+ per year in tax deductions"
 last_verified: "2026-02-10"
 applicable_states: "All"
 risk_level: "Medium (must be done correctly to withstand IRS scrutiny)"
+template_url: "/us/small-business/augusta-rule-rental-agreement"
+template_label: "Rental Agreement (IRC § 280A(g))"
 ---
 
 # The Augusta Rule — Rent Your Home to Your Business Tax-Free

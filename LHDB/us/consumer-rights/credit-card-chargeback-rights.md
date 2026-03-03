@@ -7,6 +7,8 @@ potential_savings: "Varies — recover full purchase price"
 last_verified: "2026-02-10"
 applicable_states: "All"
 risk_level: "Low"
+template_url: "/us/consumer-rights/credit-card-dispute-letter"
+template_label: "Credit Card Dispute Letter"
 ---
 
 # Credit Card Chargeback Rights Under the Fair Credit Billing Act

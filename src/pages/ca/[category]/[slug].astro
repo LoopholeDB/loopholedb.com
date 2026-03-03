@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { title, category, difficulty, summary, lastUpdated, tags } = entry.data;
+const { title, category, difficulty, summary, lastUpdated, tags, template_url, template_label } = entry.data;
 
 const categoryLabels: Record<string, string> = {
   'consumer-rights':        'Consumer Rights',
@@ -143,6 +143,15 @@ function capitalize(s: string) {
               </div>
             </dl>
           </div>
+
+          {template_url && (
+            <div class="sidebar-card sidebar-card--template">
+              <span class="template-icon" aria-hidden="true">📄</span>
+              <h2 class="sidebar-card__heading">Free Template</h2>
+              <p>{template_label ?? 'Ready-to-use template for this loophole'}</p>
+              <a href={template_url} class="btn btn--primary" style="margin-top:1.25rem; display:inline-flex;">Open Template →</a>
+            </div>
+          )}
 
           {tags && tags.length > 0 && (
             <div class="sidebar-card">
@@ -349,6 +358,25 @@ function capitalize(s: string) {
     color: rgba(242,235,224,0.6);
     line-height: 1.65;
     margin-top: 0.5rem;
+  }
+
+  .sidebar-card--template {
+    border-color: rgba(75,53,32,0.3);
+    background: rgba(75,53,32,0.04);
+  }
+  .sidebar-card--template p {
+    font-size: var(--text-sm);
+    color: var(--color-text-mid);
+    line-height: 1.65;
+    margin-top: 0.35rem;
+  }
+  .sidebar-card--template .sidebar-card__heading {
+    color: var(--color-brown-cta);
+  }
+  .template-icon {
+    display: block;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
   }
 
   .sidebar-card__heading {

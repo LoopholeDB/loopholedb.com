@@ -1,0 +1,303 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+---
+
+<Layout
+  title="Airline Involuntary Bumping Demand Letter — LoopholeDB"
+  description="Free fill-in-the-blank demand letter for involuntary denied boarding compensation under 14 CFR Part 250 (DOT rules). Print or save as PDF."
+>
+  <Nav />
+  <main>
+    <div class="template-toolbar no-print">
+      <div class="toolbar-inner">
+        <a href="/us/travel/airline-involuntary-bumping-compensation" class="toolbar-back">← Airline Bumping Compensation</a>
+        <div class="toolbar-actions">
+          <p class="toolbar-hint">Fill in the <mark>[BRACKETED FIELDS]</mark>, then print or save as PDF.</p>
+          <button onclick="window.print()" class="btn btn--primary">Print / Save as PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-wrap">
+      <article class="document">
+
+        <div class="doc-sender">
+          <p>[YOUR FULL NAME]</p>
+          <p>[YOUR STREET ADDRESS]</p>
+          <p>[CITY, STATE, ZIP CODE]</p>
+          <p>[YOUR PHONE NUMBER]</p>
+          <p>[YOUR EMAIL ADDRESS]</p>
+        </div>
+
+        <p class="doc-date">[DATE]</p>
+
+        <div class="doc-recipient">
+          <p>Customer Relations Department</p>
+          <p>[AIRLINE NAME]</p>
+          <p>[AIRLINE MAILING ADDRESS OR CUSTOMER RELATIONS EMAIL]</p>
+        </div>
+
+        <p class="doc-re"><strong>Re: Demand for Involuntary Denied Boarding Compensation — 14 CFR Part 250</strong></p>
+
+        <p class="doc-re">
+          <strong>Flight Details:</strong>
+        </p>
+        <table class="ref-table">
+          <tr><td>Airline / Flight Number:</td><td>[AIRLINE NAME] Flight [FLIGHT NUMBER]</td></tr>
+          <tr><td>Date of Travel:</td><td>[DATE OF FLIGHT]</td></tr>
+          <tr><td>Origin Airport:</td><td>[DEPARTURE AIRPORT — e.g., ORD]</td></tr>
+          <tr><td>Destination Airport:</td><td>[DESTINATION AIRPORT — e.g., LAX]</td></tr>
+          <tr><td>Scheduled Departure:</td><td>[SCHEDULED DEPARTURE TIME]</td></tr>
+          <tr><td>Rebooked Arrival Time:</td><td>[ACTUAL / REBOOKED ARRIVAL TIME]</td></tr>
+          <tr><td>Delay to Final Destination:</td><td>[X hours Y minutes]</td></tr>
+          <tr><td>Ticket Confirmation Number:</td><td>[BOOKING / CONFIRMATION NUMBER]</td></tr>
+          <tr><td>One-Way Fare Paid:</td><td>$[ONE-WAY FARE AMOUNT]</td></tr>
+        </table>
+
+        <p>Dear Customer Relations Representative:</p>
+
+        <p>
+          On [DATE OF FLIGHT], I was involuntarily denied boarding on [AIRLINE NAME] Flight [FLIGHT NUMBER] from [DEPARTURE AIRPORT] to [DESTINATION AIRPORT] due to an oversold flight. I did not volunteer to give up my seat. I held a confirmed reservation and checked in by the required deadline.
+        </p>
+
+        <p>
+          As a result of this involuntary denied boarding, I arrived at my final destination approximately [X hours] later than my originally scheduled arrival. Under the Department of Transportation's regulations at <strong>14 CFR Part 250</strong>, I am legally entitled to denied boarding compensation as follows:
+        </p>
+
+        <div class="comp-table-wrap">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Delay to Destination</th>
+                <th>Compensation (Domestic)</th>
+                <th>Compensation (International)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1–2 hours (domestic) / 1–4 hours (international)</td>
+                <td>200% of one-way fare, up to $775</td>
+                <td>200% of one-way fare, up to $775</td>
+              </tr>
+              <tr class="highlight-row">
+                <td>More than 2 hours (domestic) / more than 4 hours (international)</td>
+                <td><strong>400% of one-way fare, up to $1,550</strong></td>
+                <td><strong>400% of one-way fare, up to $1,550</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Based on my delay of [X hours] and my one-way fare of $[ONE-WAY FARE], the compensation owed to me under 14 CFR § 250.5 is:
+        </p>
+
+        <div class="demand-amount">
+          <p>Compensation Demanded: <strong>$[AMOUNT — e.g., 400% × fare, capped at $775 or $1,550]</strong></p>
+        </div>
+
+        <p>
+          Under 14 CFR § 250.9, I was entitled to receive this compensation in cash or check at the airport on the day of the incident. I am writing because [choose one: <em>this payment was not made at the airport</em> / <em>I was offered only a travel voucher, which I declined in favour of my cash entitlement</em>].
+        </p>
+
+        <p>
+          I demand payment of <strong>$[AMOUNT]</strong> within <strong>30 days</strong> of this letter. If I do not receive payment or a substantive written response by <strong>[DATE — 30 days from letter date]</strong>, I will file a formal complaint with the U.S. Department of Transportation at <em>airconsumer.dot.gov</em> and pursue all available remedies.
+        </p>
+
+        <p>
+          Please direct payment by check to my address above or advise me of your preferred payment method.
+        </p>
+
+        <p>Sincerely,</p>
+
+        <div class="doc-sig">
+          <div class="sig-line"></div>
+          <p>[YOUR PRINTED NAME]</p>
+        </div>
+
+        <p class="doc-enclosures">
+          <strong>Enclosures:</strong><br />
+          1. Original boarding pass or booking confirmation<br />
+          2. Written denied boarding notice (if provided by airline)<br />
+          3. Rebooked flight confirmation<br />
+          4. [Any written communication from airline regarding the incident]
+        </p>
+
+        <div class="doc-footer-note no-print">
+          <p><strong>Tips:</strong> Send this letter to the airline's official Customer Relations mailing address or via email with read receipt. If the airline still refuses after your written demand, file a complaint with the DOT at <a href="https://airconsumer.dot.gov" target="_blank">airconsumer.dot.gov</a> — DOT complaints create a formal record and airlines take them seriously. You are also entitled to keep your rebooked ticket; the compensation is in addition to being transported to your destination.</p>
+        </div>
+
+      </article>
+    </div>
+  </main>
+  <div class="no-print"><Footer /></div>
+</Layout>
+
+<style>
+  .template-toolbar {
+    background: var(--color-espresso);
+    padding: 0.85rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .toolbar-inner {
+    max-width: var(--max-w);
+    margin-inline: auto;
+    padding-inline: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .toolbar-back {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(242,235,224,0.6);
+    transition: color var(--transition);
+    white-space: nowrap;
+  }
+  .toolbar-back:hover { color: var(--color-cream); }
+  .toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .toolbar-hint {
+    font-size: var(--text-sm);
+    color: rgba(242,235,224,0.55);
+  }
+  .toolbar-hint mark {
+    background: rgba(242,235,224,0.15);
+    color: var(--color-cream);
+    border-radius: 3px;
+    padding: 0.1em 0.3em;
+  }
+
+  .doc-wrap {
+    background: var(--color-cream-dark);
+    min-height: 100vh;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  .document {
+    background: #fff;
+    max-width: 760px;
+    margin-inline: auto;
+    padding: 3.5rem 4rem;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #111;
+  }
+
+  .document p { margin-bottom: 1.1rem; }
+
+  .doc-sender { margin-bottom: 2rem; }
+  .doc-sender p { margin: 0; line-height: 1.55; }
+
+  .doc-date { margin-bottom: 1.5rem; }
+
+  .doc-recipient { margin-bottom: 1.75rem; }
+  .doc-recipient p { margin: 0; line-height: 1.55; }
+
+  .doc-re { margin-bottom: 0.75rem; }
+
+  .ref-table {
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+  .ref-table td {
+    padding: 0.2rem 1rem 0.2rem 0;
+    vertical-align: top;
+  }
+  .ref-table td:first-child {
+    color: #555;
+    white-space: nowrap;
+    font-style: italic;
+    min-width: 200px;
+  }
+
+  .comp-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 1.25rem;
+  }
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    font-family: Georgia, serif;
+  }
+  .comp-table th {
+    background: #f0ebe2;
+    border: 1px solid #ccc;
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-size: 0.82rem;
+  }
+  .comp-table td {
+    border: 1px solid #ccc;
+    padding: 0.5rem 0.75rem;
+    vertical-align: top;
+  }
+  .comp-table .highlight-row td {
+    background: #fefcf5;
+  }
+
+  .demand-amount {
+    border: 2px solid #111;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    margin: 1.5rem 0;
+    font-size: 1.1rem;
+  }
+  .demand-amount p { margin: 0; }
+
+  .doc-sig {
+    margin: 2rem 0 1.5rem;
+  }
+  .sig-line {
+    width: 260px;
+    border-bottom: 1px solid #888;
+    margin-bottom: 0.5rem;
+  }
+
+  .doc-enclosures {
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .doc-footer-note {
+    margin-top: 2rem;
+    padding: 1rem 1.25rem;
+    background: #f5f0e8;
+    border-left: 3px solid #b08860;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: #555;
+    border-radius: 0 4px 4px 0;
+  }
+  .doc-footer-note p { margin: 0; }
+  .doc-footer-note a { color: #4B3520; }
+
+  @media print {
+    .no-print { display: none !important; }
+    .doc-wrap { background: #fff; padding: 0; }
+    .document { box-shadow: none; border: none; padding: 0; max-width: 100%; }
+  }
+
+  @media (max-width: 600px) {
+    .document { padding: 2rem 1.5rem; }
+    .toolbar-inner { flex-direction: column; align-items: flex-start; }
+    .ref-table td:first-child { min-width: 130px; }
+  }
+</style>

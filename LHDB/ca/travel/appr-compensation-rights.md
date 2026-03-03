@@ -7,6 +7,8 @@ summary: "Canada's APPR regulations require airlines to pay $125–$1,000+ in co
 tags: ["APPR", "flight delay", "airline compensation", "CTA", "denied boarding", "cancelled flight"]
 difficulty: "easy"
 lastUpdated: "2025-01-01"
+template_url: "/ca/travel/appr-compensation-letter"
+template_label: "APPR Compensation Claim Letter"
 ---
 
 ## Overview

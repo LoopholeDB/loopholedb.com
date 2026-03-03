@@ -7,6 +7,8 @@ summary: "Canada's Access to Information Act gives every person — citizen or n
 tags: ["access to information", "ATIA", "ATI", "FOIA equivalent", "government transparency", "OIC"]
 difficulty: "easy"
 lastUpdated: "2025-01-01"
+template_url: "/ca/government-bureaucracy/ati-request-letter"
+template_label: "ATI Request Letter"
 ---
 
 ## Overview

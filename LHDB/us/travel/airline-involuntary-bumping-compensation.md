@@ -7,6 +7,8 @@ potential_savings: "$400 - $1,550 per incident"
 last_verified: "2026-02-10"
 applicable_states: "All (federal regulation)"
 risk_level: "None"
+template_url: "/us/travel/airline-bumping-demand-letter"
+template_label: "Involuntary Bumping Demand Letter"
 ---
 
 # Airline Involuntary Bumping Compensation
