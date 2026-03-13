@@ -1,0 +1,142 @@
+---
+---
+
+<div id="disclaimer-modal" class="dm" role="dialog" aria-modal="true" aria-labelledby="dm-title" hidden>
+  <div class="dm__backdrop"></div>
+  <div class="dm__panel">
+    <h2 class="dm__title" id="dm-title">Before You Continue</h2>
+    <p class="dm__intro">
+      LoopholeDB provides legal information for educational purposes only.
+      Please read and acknowledge the following before using this site:
+    </p>
+    <ul class="dm__list">
+      <li>This is <strong>NOT legal advice</strong> and should not be treated as such</li>
+      <li>Always consult a qualified attorney for your specific situation</li>
+      <li>We make no guarantees about the accuracy or completeness of any information</li>
+      <li>Laws vary by jurisdiction and change over time — verify before acting</li>
+    </ul>
+    <p class="dm__agree">
+      By continuing, you agree to our <a href="/terms">Terms of Service</a> and <a href="/disclaimer">Disclaimer</a>.
+    </p>
+    <button id="dm-accept" class="dm__btn" type="button">I Understand, Continue</button>
+  </div>
+</div>
+
+<style>
+  .dm {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .dm[hidden] { display: none; }
+
+  .dm__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(30, 20, 10, 0.7);
+    backdrop-filter: blur(4px);
+  }
+
+  .dm__panel {
+    position: relative;
+    z-index: 1;
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 2.5rem 2rem 2rem;
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+    animation: modalIn 0.2s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .dm__title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .dm__intro {
+    font-size: var(--text-sm);
+    color: var(--color-text-mid);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .dm__list {
+    font-size: var(--text-sm);
+    color: var(--color-text-mid);
+    line-height: 1.7;
+    padding-left: 1.25rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .dm__list strong {
+    color: var(--color-text-dark);
+  }
+
+  .dm__agree {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+  }
+
+  .dm__agree a {
+    color: var(--color-brown-cta);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .dm__btn {
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    background: var(--color-brown-cta);
+    color: var(--color-cream);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .dm__btn:hover {
+    opacity: 0.88;
+  }
+</style>
+
+<script>
+  const KEY = 'lhdb-disclaimer-accepted';
+  const modal = document.getElementById('disclaimer-modal');
+
+  if (!localStorage.getItem(KEY)) {
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  document.getElementById('dm-accept').addEventListener('click', () => {
+    localStorage.setItem(KEY, 'true');
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  });
+</script>
