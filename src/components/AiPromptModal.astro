@@ -1,0 +1,344 @@
+---
+interface Props {
+  prompt: string;
+  title: string;
+}
+const { prompt, title } = Astro.props;
+---
+
+<!-- Trigger button (hero variant — slot="hero") and sidebar variant both reference the same modal -->
+<button
+  id="ai-modal-trigger"
+  class="lh-ai-btn"
+  type="button"
+  aria-haspopup="dialog"
+>
+  <span class="lh-ai-btn__icon">✦</span>
+  Chat with AI Agent
+</button>
+
+<!-- Modal overlay -->
+<div id="ai-modal" class="ai-modal" role="dialog" aria-modal="true" aria-labelledby="ai-modal-title" hidden>
+  <div class="ai-modal__backdrop"></div>
+  <div class="ai-modal__panel">
+
+    <button class="ai-modal__close" id="ai-modal-close" aria-label="Close">✕</button>
+
+    <div class="ai-modal__header">
+      <span class="ai-modal__icon">✦</span>
+      <h2 class="ai-modal__title" id="ai-modal-title">Chat with AI Agent</h2>
+      <p class="ai-modal__sub">Fill in your details and we'll open a personalised prompt in Perplexity AI.</p>
+    </div>
+
+    <form id="ai-prompt-form" novalidate>
+      <div class="ai-modal__fields" id="ai-modal-fields">
+        <!-- fields injected by JS -->
+      </div>
+
+      <div class="ai-modal__footer">
+        <button type="submit" class="btn btn--primary ai-modal__submit">
+          <span>Start Chat</span>
+          <span class="ai-modal__submit-icon">→</span>
+        </button>
+        <p class="ai-modal__note">Opens in Perplexity AI — free, no account needed.</p>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<style>
+  /* ── Trigger button ───────────────────────────────── */
+  .lh-ai-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.4rem;
+    background: rgba(255,255,255,0.1);
+    color: var(--color-cream);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    align-self: flex-start;
+    font-family: inherit;
+  }
+  .lh-ai-btn:hover {
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.4);
+  }
+  .lh-ai-btn__icon { font-size: 0.9rem; }
+
+  /* ── Overlay ──────────────────────────────────────── */
+  .ai-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .ai-modal[hidden] { display: none; }
+
+  .ai-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(30,20,10,0.6);
+    backdrop-filter: blur(4px);
+  }
+
+  /* ── Panel ────────────────────────────────────────── */
+  .ai-modal__panel {
+    position: relative;
+    z-index: 1;
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 2.5rem 2rem 2rem;
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.22);
+    animation: modalIn 0.2s ease;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* ── Close ────────────────────────────────────────── */
+  .ai-modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-cream-dark);
+    border: 1px solid var(--color-border);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+  }
+  .ai-modal__close:hover {
+    background: var(--color-border);
+    color: var(--color-text-dark);
+  }
+
+  /* ── Header ───────────────────────────────────────── */
+  .ai-modal__header {
+    margin-bottom: 1.75rem;
+  }
+  .ai-modal__icon {
+    display: block;
+    font-size: 1.4rem;
+    color: var(--color-brown-cta);
+    margin-bottom: 0.6rem;
+  }
+  .ai-modal__title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .ai-modal__sub {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  /* ── Fields ───────────────────────────────────────── */
+  .ai-modal__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  /* ── Footer ───────────────────────────────────────── */
+  .ai-modal__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .ai-modal__submit {
+    width: 100%;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+  }
+  .ai-modal__submit-icon { font-size: 1.1rem; }
+  .ai-modal__note {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+</style>
+
+<style is:global>
+  /* Field styles injected via innerHTML — must be global */
+  .ai-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .ai-field label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .ai-field input,
+  .ai-field select {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-white);
+    font-size: var(--text-sm);
+    color: var(--color-text-dark);
+    font-family: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    box-sizing: border-box;
+  }
+  .ai-field input:focus,
+  .ai-field select:focus {
+    outline: none;
+    border-color: var(--color-brown-cta);
+    box-shadow: 0 0 0 3px rgba(75,53,32,0.1);
+  }
+  .ai-field input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.7;
+  }
+</style>
+
+<script define:vars={{ prompt, title }}>
+  // ── Parse placeholders from prompt ──────────────────
+  // Matches [ANYTHING IN BRACKETS] — these are the tokens users must fill in
+  function parsePlaceholders(str) {
+    const regex = /\[([^\]]+)\]/g;
+    const seen = new Set();
+    const fields = [];
+    let match;
+    while ((match = regex.exec(str)) !== null) {
+      const raw = match[1]; // e.g. "AMOUNT", "PROVINCE", "VISA / MASTERCARD / AMEX"
+      if (seen.has(raw)) continue;
+      seen.add(raw);
+
+      // Detect if this is a choice field (options separated by " / ")
+      const options = raw.split(' / ').map(s => s.trim());
+      const isChoice = options.length > 1;
+
+      // Build a human-readable label from the raw token
+      const label = raw
+        .replace(/_/g, ' ')
+        .replace(/\//g, ' or ')
+        .toLowerCase()
+        .replace(/\b\w/g, c => c.toUpperCase());
+
+      fields.push({ raw, label, isChoice, options });
+    }
+    return fields;
+  }
+
+  const fields = parsePlaceholders(prompt);
+
+  // ── Build form fields ────────────────────────────────
+  const container = document.getElementById('ai-modal-fields');
+
+  if (fields.length === 0) {
+    // No placeholders — just show the raw prompt as read-only info
+    container.innerHTML = `<p style="font-size:var(--text-sm);color:var(--color-text-mid);line-height:1.7">${prompt}</p>`;
+  } else {
+    container.innerHTML = fields.map(f => {
+      if (f.isChoice) {
+        const opts = f.options.map(o => `<option value="${o}">${o}</option>`).join('');
+        return `
+          <div class="ai-field">
+            <label for="field-${f.raw}">${f.label}</label>
+            <select id="field-${f.raw}" data-placeholder="${f.raw}">
+              ${opts}
+            </select>
+          </div>`;
+      } else {
+        // Guess placeholder hint from token name
+        const hint = f.raw.includes('AMOUNT') ? 'e.g. $50,000'
+          : f.raw.includes('DATE') ? 'e.g. Jan 15, 2025'
+          : f.raw.includes('YEAR') ? 'e.g. 2022'
+          : f.raw.includes('NAME') ? 'e.g. Acme Corp'
+          : f.raw.includes('STATE') || f.raw.includes('PROVINCE') ? 'e.g. California'
+          : '';
+        return `
+          <div class="ai-field">
+            <label for="field-${f.raw}">${f.label}</label>
+            <input
+              type="text"
+              id="field-${f.raw}"
+              data-placeholder="${f.raw}"
+              placeholder="${hint}"
+            />
+          </div>`;
+      }
+    }).join('');
+  }
+
+  // ── Open / close modal ───────────────────────────────
+  const modal    = document.getElementById('ai-modal');
+  const backdrop = modal.querySelector('.ai-modal__backdrop');
+  const closeBtn = document.getElementById('ai-modal-close');
+
+  function openModal() {
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    // Focus first input
+    setTimeout(() => {
+      modal.querySelector('input, select')?.focus();
+    }, 50);
+  }
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  // All triggers on the page (hero button + sidebar button)
+  document.querySelectorAll('#ai-modal-trigger, #ai-modal-trigger-sidebar').forEach(btn => {
+    btn.addEventListener('click', openModal);
+  });
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // ── Form submit → build prompt → open Perplexity ────
+  document.getElementById('ai-prompt-form').addEventListener('submit', e => {
+    e.preventDefault();
+
+    let filledPrompt = prompt;
+
+    // Replace each [PLACEHOLDER] with the user's input
+    modal.querySelectorAll('[data-placeholder]').forEach(el => {
+      const key = el.dataset.placeholder;
+      const val = el.value.trim() || `[${key}]`; // fall back to original token if empty
+      // Replace all occurrences of this exact placeholder
+      filledPrompt = filledPrompt.split(`[${key}]`).join(val);
+    });
+
+    const url = `https://www.perplexity.ai/?q=${encodeURIComponent(filledPrompt)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+    closeModal();
+  });
+</script>

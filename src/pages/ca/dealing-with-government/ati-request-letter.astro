@@ -1,0 +1,229 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+---
+
+<Layout
+  title="Access to Information Request Letter — LoopholeDB"
+  description="Free fill-in-the-blank Access to Information Act (ATIA) request letter for Canadian federal government records. Print or save as PDF."
+>
+  <Nav />
+  <main>
+    <div class="template-toolbar no-print">
+      <div class="toolbar-inner">
+        <a href="/ca/dealing-with-government/access-to-information-requests" class="toolbar-back">← Access to Information Requests</a>
+        <div class="toolbar-actions">
+          <p class="toolbar-hint">Fill in the <mark>[BRACKETED FIELDS]</mark>, then print or save as PDF.</p>
+          <button onclick="window.print()" class="btn btn--primary">Print / Save as PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-wrap">
+      <article class="document">
+
+        <div class="doc-sender">
+          <p>[YOUR FULL NAME]</p>
+          <p>[YOUR STREET ADDRESS]</p>
+          <p>[CITY, PROVINCE, POSTAL CODE]</p>
+          <p>[YOUR PHONE NUMBER]</p>
+          <p>[YOUR EMAIL ADDRESS]</p>
+        </div>
+
+        <p class="doc-date">[DATE]</p>
+
+        <div class="doc-recipient">
+          <p>ATIP Coordinator</p>
+          <p>[INSTITUTION NAME — e.g., Canada Border Services Agency]</p>
+          <p>[INSTITUTION MAILING ADDRESS]</p>
+          <p>[CITY, PROVINCE, POSTAL CODE]</p>
+        </div>
+
+        <p class="doc-re"><strong>Re: Access to Information Act Request</strong></p>
+
+        <p>Dear ATIP Coordinator:</p>
+
+        <p>
+          Pursuant to the <em>Access to Information Act</em>, R.S.C. 1985, c. A-1, I hereby request access to and copies of the following records held by [INSTITUTION NAME]:
+        </p>
+
+        <div class="doc-box">
+          <p>
+            [DESCRIBE THE RECORDS YOU ARE REQUESTING. Be as specific as possible: include relevant date ranges, subject matter, names of officials or programs, document types (emails, briefing notes, contracts, inspection reports, etc.), and any reference numbers you know. Example: "All briefing notes, memoranda, and email correspondence prepared for or sent by the Minister of [DEPARTMENT] regarding [SUBJECT MATTER] between [START DATE] and [END DATE]."]
+          </p>
+        </div>
+
+        <p><strong>Format of Response</strong></p>
+        <p>
+          I prefer to receive responsive records in electronic format (PDF or searchable text) sent to the email address above. If any records are only available in paper format, please advise me and I will confirm whether paper copies are acceptable.
+        </p>
+
+        <p><strong>Fee Waiver Request</strong></p>
+        <p>
+          I request that fees beyond the $5.00 application fee be waived pursuant to section 11 of the <em>Access to Information Act</em> and the <em>Access to Information Act Heads of Government Institutions Regulations</em>. Disclosure is in the public interest as these records are likely to contribute to public understanding of government activities and are not being requested for commercial purposes. Specifically: [BRIEFLY EXPLAIN PUBLIC INTEREST — e.g., "These records relate to a matter of significant public concern regarding government spending / regulatory enforcement / public health policy."]
+        </p>
+        <p>
+          If a full fee waiver is not granted, please notify me before incurring any additional costs and provide an itemized estimate.
+        </p>
+
+        <p><strong>Exemptions and Severance</strong></p>
+        <p>
+          If any portion of the requested records is exempt from disclosure, I request that you sever and release all non-exempt portions, and provide a written explanation identifying each exemption claimed and the legal basis under the <em>Access to Information Act</em>.
+        </p>
+
+        <p><strong>Enclosed: Application Fee</strong></p>
+        <p>
+          I have enclosed a cheque / money order payable to the Receiver General for Canada in the amount of <strong>$5.00</strong> as required by section 11(1) of the Act. [Note: If your request relates solely to your own personal information, no fee is required — delete this paragraph if applicable.]
+        </p>
+
+        <p>
+          I expect a response within the 30 calendar days required by section 7 of the <em>Access to Information Act</em>. If you require clarification about this request, please contact me at the phone number or email address above.
+        </p>
+
+        <p>Sincerely,</p>
+
+        <div class="doc-sig">
+          <div class="sig-line"></div>
+          <p>[YOUR PRINTED NAME]</p>
+        </div>
+
+        <p class="doc-enclosures">
+          <strong>Enclosures:</strong><br />
+          1. Cheque / money order — $5.00 payable to Receiver General for Canada<br />
+          2. [Any supporting identification if required]
+        </p>
+
+        <div class="doc-footer-note no-print">
+          <p><strong>Tips:</strong> You can also file online at <a href="https://atip.tbs-sct.gc.ca" target="_blank">atip.tbs-sct.gc.ca</a> — the online portal is faster and provides automatic tracking. If the institution does not respond within 30 days, or if you believe an exemption is being improperly applied, file a complaint with the Office of the Information Commissioner at <a href="https://oic-ci.gc.ca" target="_blank">oic-ci.gc.ca</a> at no cost. For provincial records, use the equivalent provincial legislation (e.g., FIPPA in Ontario/BC, FOIP in Alberta).</p>
+        </div>
+
+      </article>
+    </div>
+  </main>
+  <div class="no-print"><Footer /></div>
+</Layout>
+
+<style>
+  .template-toolbar {
+    background: var(--color-espresso);
+    padding: 0.85rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .toolbar-inner {
+    max-width: var(--max-w);
+    margin-inline: auto;
+    padding-inline: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .toolbar-back {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(242,235,224,0.6);
+    transition: color var(--transition);
+    white-space: nowrap;
+  }
+  .toolbar-back:hover { color: var(--color-cream); }
+  .toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .toolbar-hint {
+    font-size: var(--text-sm);
+    color: rgba(242,235,224,0.55);
+  }
+  .toolbar-hint mark {
+    background: rgba(242,235,224,0.15);
+    color: var(--color-cream);
+    border-radius: 3px;
+    padding: 0.1em 0.3em;
+  }
+
+  .doc-wrap {
+    background: var(--color-cream-dark);
+    min-height: 100vh;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  .document {
+    background: #fff;
+    max-width: 760px;
+    margin-inline: auto;
+    padding: 3.5rem 4rem;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #111;
+  }
+
+  .document p { margin-bottom: 1.1rem; }
+
+  .doc-sender { margin-bottom: 2rem; }
+  .doc-sender p { margin: 0; line-height: 1.55; }
+
+  .doc-date { margin-bottom: 1.5rem; }
+
+  .doc-recipient { margin-bottom: 1.75rem; }
+  .doc-recipient p { margin: 0; line-height: 1.55; }
+
+  .doc-re { margin-bottom: 1.75rem; }
+
+  .doc-box {
+    border: 1px solid #bbb;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    background: #fafafa;
+    min-height: 120px;
+  }
+  .doc-box p { margin: 0; color: #555; font-style: italic; }
+
+  .doc-sig {
+    margin: 2rem 0 1.5rem;
+  }
+  .sig-line {
+    width: 260px;
+    border-bottom: 1px solid #888;
+    margin-bottom: 0.5rem;
+  }
+
+  .doc-enclosures {
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .doc-footer-note {
+    margin-top: 2rem;
+    padding: 1rem 1.25rem;
+    background: #f5f0e8;
+    border-left: 3px solid #b08860;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: #555;
+    border-radius: 0 4px 4px 0;
+  }
+  .doc-footer-note p { margin: 0; }
+  .doc-footer-note a { color: #4B3520; }
+
+  @media print {
+    .no-print { display: none !important; }
+    .doc-wrap { background: #fff; padding: 0; }
+    .document { box-shadow: none; border: none; padding: 0; max-width: 100%; }
+  }
+
+  @media (max-width: 600px) {
+    .document { padding: 2rem 1.5rem; }
+    .toolbar-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>

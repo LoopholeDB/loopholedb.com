@@ -3,6 +3,7 @@ import Search from './Search.astro';
 
 const links = [
   { label: 'Categories', href: '/us', id: 'nav-categories' },
+  { label: 'Quiz',       href: '/quiz' },
   { label: 'Submit',     href: '/submit' },
 ];
 ---
@@ -217,7 +218,8 @@ const links = [
   });
 
   document.getElementById('nav-cta')?.addEventListener('click', () => {
-    (window as any).openCountryPicker?.();
+    const r = localStorage.getItem('lhdb-region') ?? 'us';
+    window.location.href = `/${r}`;
   });
 
   // Nav burger toggle

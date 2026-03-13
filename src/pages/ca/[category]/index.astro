@@ -7,8 +7,6 @@ import Footer from '../../../components/Footer.astro';
 export async function getStaticPaths() {
   const loopholes = await getCollection('loopholes_ca');
 
-  // CA entries use frontmatter `category` (slug form) and `slug` fields.
-  // The glob loader sets entry.id = frontmatter slug when present.
   const byCategory = loopholes.reduce<Record<string, typeof loopholes>>((acc, entry) => {
     const cat = entry.data.category;
     (acc[cat] ??= []).push(entry);
@@ -22,48 +20,48 @@ export async function getStaticPaths() {
 }
 
 const categoryIcons: Record<string, string> = {
-  'consumer-rights':        '🛒',
-  'digital-privacy':        '🔐',
-  'education':              '🎓',
-  'employment-labor':       '💼',
-  'estate-planning':        '📜',
-  'financial-tax':          '💰',
-  'government-bureaucracy': '🏛️',
-  'healthcare':             '🏥',
-  'housing-real-estate':    '🏠',
-  'insurance':              '🛡️',
-  'small-business':         '🏪',
-  'travel':                 '✈️',
+  'credit-cards':           '💳',
+  'care-about-privacy':     '🔐',
+  'saving-for-retirement':  '🎓',
+  'have-a-job':             '💼',
+  'planning-your-future':   '📜',
+  'pay-taxes':              '💰',
+  'dealing-with-government':'🏛️',
+  'have-medical-bills':     '🏥',
+  'own-a-home':             '🏠',
+  'have-insurance':         '🛡️',
+  'run-a-business':         '🏪',
+  'travel-often':           '✈️',
 };
 
 const categoryLabels: Record<string, string> = {
-  'consumer-rights':        'Consumer Rights',
-  'digital-privacy':        'Digital Privacy',
-  'education':              'Education',
-  'employment-labor':       'Employment & Labour',
-  'estate-planning':        'Estate Planning',
-  'financial-tax':          'Financial & Tax',
-  'government-bureaucracy': 'Government & Bureaucracy',
-  'healthcare':             'Healthcare',
-  'housing-real-estate':    'Housing & Real Estate',
-  'insurance':              'Insurance',
-  'small-business':         'Small Business',
-  'travel':                 'Travel',
+  'credit-cards':           'If You Have a Credit Card',
+  'care-about-privacy':     'If You Care About Privacy',
+  'saving-for-retirement':  "If You're Saving for Retirement",
+  'have-a-job':             'If You Have a Job',
+  'planning-your-future':   "If You're Planning Your Future",
+  'pay-taxes':              'If You Pay Taxes',
+  'dealing-with-government':"If You're Dealing With Government",
+  'have-medical-bills':     'If You Have Medical Bills',
+  'own-a-home':             'If You Own a Home',
+  'have-insurance':         'If You Have Insurance',
+  'run-a-business':         'If You Run a Business',
+  'travel-often':           'If You Travel',
 };
 
 const categoryDescriptions: Record<string, string> = {
-  'consumer-rights':        'Know your rights as a buyer under federal and provincial consumer protection law. Chargebacks, warranties, refunds, and protections against unfair practices.',
-  'digital-privacy':        'Your rights under PIPEDA and provincial privacy laws. Data access requests, breach notification, and what companies can legally do with your information.',
-  'education':              'Student rights, RESP strategies, disability accommodations, and maximizing government education grants and tax credits.',
-  'employment-labor':       'Wages, wrongful dismissal, workplace safety, and employee vs. contractor classification under federal and provincial law.',
-  'estate-planning':        'Wills, trusts, probate, powers of attorney, and beneficiary strategies to minimise tax and transfer wealth efficiently.',
-  'financial-tax':          'CRA procedures, RRSP/TFSA/FHSA strategies, deductions, credits, and tax obligations for individuals and families.',
-  'government-bureaucracy': 'Access to Information requests, administrative appeals, licensing disputes, and navigating federal and provincial agencies.',
-  'healthcare':             'Provincial health coverage, disability tax credits, private insurance disputes, and rights when dealing with the healthcare system.',
-  'housing-real-estate':    'Tenant protections, eviction rules, the Principal Residence Exemption, FHSA strategies, and landlord disclosure requirements.',
-  'insurance':              'Policy obligations, claim denials, bad faith practices, and what Canadian insurers must cover by law.',
-  'small-business':         'Business formation, the Lifetime Capital Gains Exemption, contracts, licensing, and regulatory compliance for Canadian entrepreneurs.',
-  'travel':                 'Passenger rights under APPR, flight delay compensation, hotel disputes, and travel insurance coverage for Canadians.',
+  'credit-cards':           'Chargebacks, billing disputes, fraud protection, and rights you have as a cardholder under federal and provincial law.',
+  'care-about-privacy':     'Your rights under PIPEDA and provincial privacy laws. Data access requests, breach notification, and how to make companies delete your information.',
+  'saving-for-retirement':  'RESP strategies, RRSP/TFSA/FHSA loopholes, rollovers, and contribution rules that grow your savings faster.',
+  'have-a-job':             'Wages, wrongful dismissal, workplace safety, and employee vs. contractor classification under federal and provincial law.',
+  'planning-your-future':   'Wills, beneficiary designations, probate shortcuts, and ways to pass on assets without a lawyer or court.',
+  'pay-taxes':              'CRA procedures, legal deductions, RRSP strategies, and loopholes that reduce what you owe.',
+  'dealing-with-government':'How to get government records, appeal decisions, dispute fines, and navigate federal and provincial agencies.',
+  'have-medical-bills':     'Disability tax credits, provincial health coverage gaps, private insurance disputes, and how to reduce what you pay.',
+  'own-a-home':             'The Principal Residence Exemption, FHSA strategies, tenant protections, and rights homeowners often overlook.',
+  'have-insurance':         'Claim rights, bad faith protections, diminished value claims, and what Canadian insurers must cover by law.',
+  'run-a-business':         'The Lifetime Capital Gains Exemption, tax strategies, liability protections, and loopholes for Canadian entrepreneurs.',
+  'travel-often':           'Passenger rights under APPR, compensation for delays and bumping, and protections most Canadian travellers never claim.',
 };
 
 const difficultyOrder: Record<string, number> = {
@@ -156,7 +154,7 @@ const jsonLd = {
 
         <div class="lh-grid">
           {sorted.map(entry => {
-            const slug = entry.id; // entry.id = frontmatter slug for CA entries
+            const slug = entry.id;
             const { title, difficulty, summary } = entry.data;
             return (
               <a href={`/ca/${categorySlug}/${slug}`} class="lh-card">

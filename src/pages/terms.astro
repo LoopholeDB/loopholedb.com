@@ -1,0 +1,381 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const lastUpdated = '2026-03-13';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  'name': 'Terms of Service — LoopholeDB',
+  'url': 'https://loopholedb.com/terms',
+  'description': 'Terms of service for LoopholeDB.com, governing your use of the website and its content.',
+  'publisher': {
+    '@type': 'Organization',
+    'name': 'LoopholeDB',
+    'url': 'https://loopholedb.com',
+  },
+};
+---
+
+<Layout
+  title="Terms of Service — LoopholeDB"
+  description="Terms of service for LoopholeDB.com, governing your use of the website and its content."
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Nav />
+  <main>
+
+    <section class="hero section--dark">
+      <div class="container hero__inner">
+        <span class="eyebrow">Legal</span>
+        <h1 class="t-h1 hero__title">Terms of Service</h1>
+        <p class="hero__meta">LoopholeDB.com · Last updated <time datetime={lastUpdated}>{lastUpdated}</time></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container page__inner">
+
+        <nav class="toc" aria-label="On this page">
+          <p class="toc__heading">On this page</p>
+          <ol>
+            <li><a href="#acceptance">Acceptance of Terms</a></li>
+            <li><a href="#use">Permitted Use</a></li>
+            <li><a href="#ip">Intellectual Property</a></li>
+            <li><a href="#submissions">User Submissions</a></li>
+            <li><a href="#disclaimer">Disclaimers</a></li>
+            <li><a href="#liability">Limitation of Liability</a></li>
+            <li><a href="#indemnification">Indemnification</a></li>
+            <li><a href="#links">Third-Party Links</a></li>
+            <li><a href="#changes">Changes to These Terms</a></li>
+            <li><a href="#governing-law">Governing Law</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ol>
+        </nav>
+
+        <article class="prose">
+
+          <section id="acceptance">
+            <h2>1. Acceptance of Terms</h2>
+            <p>
+              By accessing or using <strong>LoopholeDB.com</strong> (the "Site"), you agree to
+              be bound by these Terms of Service ("Terms"). If you do not agree to these Terms,
+              please do not use the Site.
+            </p>
+            <p>
+              These Terms apply to all visitors and users of the Site. They should be read
+              alongside our <a href="/privacy">Privacy Policy</a> and <a href="/disclaimer">Legal Disclaimer</a>,
+              which are incorporated into these Terms by reference.
+            </p>
+          </section>
+
+          <section id="use">
+            <h2>2. Permitted Use</h2>
+            <p>
+              You may use the Site for lawful, personal, and non-commercial purposes only.
+              You agree not to:
+            </p>
+            <ul>
+              <li>Copy, reproduce, scrape, or systematically download content from the Site for commercial purposes without our prior written consent;</li>
+              <li>Use automated tools (bots, crawlers, scrapers) to harvest content at a rate or volume that places unreasonable load on our servers;</li>
+              <li>Modify, adapt, translate, or create derivative works based on the Site's content without our written consent;</li>
+              <li>Use the Site in any way that violates applicable local, national, or international law or regulation;</li>
+              <li>Attempt to gain unauthorised access to any part of the Site, its servers, or any system or network connected to it;</li>
+              <li>Transmit any unsolicited commercial communications or spam via the Site; or</li>
+              <li>Misrepresent the source of content you obtain from this Site, including by presenting it as your own original legal analysis.</li>
+            </ul>
+            <p>
+              We reserve the right to terminate or restrict your access to the Site at any time,
+              without notice, for any conduct that we believe violates these Terms or is harmful
+              to other users, us, or third parties.
+            </p>
+          </section>
+
+          <section id="ip">
+            <h2>3. Intellectual Property</h2>
+            <p>
+              All content on LoopholeDB.com — including but not limited to text, summaries,
+              editorial analysis, categorisation, design, graphics, and the overall selection
+              and arrangement of content — is owned by or licensed to LoopholeDB and is protected
+              by applicable copyright, trademark, and other intellectual property laws.
+            </p>
+            <p>
+              You may share links to individual pages on the Site and quote brief excerpts for
+              commentary, criticism, or educational purposes, provided you clearly attribute
+              LoopholeDB.com as the source. Any other reproduction or distribution of Site
+              content requires our prior written permission.
+            </p>
+            <p>
+              The LoopholeDB name and logo are trademarks of their respective owners. Nothing
+              on this Site grants you any licence to use them.
+            </p>
+          </section>
+
+          <section id="submissions">
+            <h2>4. User Submissions</h2>
+            <p>
+              If you submit a loophole suggestion, tip, correction, or other content to us
+              (collectively, "Submissions"), you grant LoopholeDB a worldwide, royalty-free,
+              perpetual, irrevocable licence to use, reproduce, modify, publish, and distribute
+              your Submission in any medium, for any purpose related to operating and improving
+              the Site.
+            </p>
+            <p>
+              You represent and warrant that your Submission is your own original work (or that
+              you have the right to share it), that it does not infringe any third party's
+              intellectual property rights, and that it does not contain false, defamatory,
+              or unlawful content.
+            </p>
+            <p>
+              We are under no obligation to publish, respond to, or retain any Submission.
+            </p>
+          </section>
+
+          <section id="disclaimer">
+            <h2>5. Disclaimers</h2>
+            <p>
+              The Site and all content on it are provided <strong>"as is"</strong> and
+              <strong>"as available"</strong>, without any warranty of any kind, express or
+              implied, including but not limited to warranties of merchantability, fitness for
+              a particular purpose, accuracy, completeness, or non-infringement.
+            </p>
+            <p>
+              We do not warrant that the Site will be uninterrupted, error-free, or free of
+              viruses or other harmful components. We may modify, suspend, or discontinue the
+              Site at any time without notice.
+            </p>
+            <p>
+              Content on LoopholeDB.com does not constitute legal advice. Please read our full
+              <a href="/disclaimer">Legal Disclaimer</a> before relying on any information
+              published here.
+            </p>
+          </section>
+
+          <section id="liability">
+            <h2>6. Limitation of Liability</h2>
+            <p>
+              To the fullest extent permitted by applicable law, LoopholeDB, its operators,
+              employees, contributors, and affiliates shall not be liable for any direct,
+              indirect, incidental, special, consequential, or punitive damages arising out of
+              or in connection with your use of, or inability to use, the Site or its content —
+              even if we have been advised of the possibility of such damages.
+            </p>
+            <p>
+              This includes, without limitation, damages for loss of profits, data, goodwill,
+              or other intangible losses resulting from:
+            </p>
+            <ul>
+              <li>Your access to or use of (or inability to access or use) the Site;</li>
+              <li>Any content obtained from the Site;</li>
+              <li>Unauthorised access to or alteration of your data; or</li>
+              <li>Any other matter relating to the Site.</li>
+            </ul>
+            <p>
+              Some jurisdictions do not allow the exclusion of certain warranties or limitation
+              of liability for consequential damages, so some of the above limitations may not
+              apply to you.
+            </p>
+          </section>
+
+          <section id="indemnification">
+            <h2>7. Indemnification</h2>
+            <p>
+              You agree to indemnify, defend, and hold harmless LoopholeDB and its operators,
+              employees, contributors, and affiliates from and against any claims, liabilities,
+              damages, losses, and expenses (including reasonable legal fees) arising out of or
+              in any way connected with your access to or use of the Site, your violation of
+              these Terms, or your infringement of any third-party right.
+            </p>
+          </section>
+
+          <section id="links">
+            <h2>8. Third-Party Links</h2>
+            <p>
+              The Site may contain links to third-party websites or resources. These links are
+              provided for your convenience only. We have no control over the content or
+              practices of third-party sites and accept no responsibility for them or for any
+              loss or damage that may arise from your use of them.
+            </p>
+            <p>
+              Linking to a third-party site does not imply our endorsement of that site, its
+              content, or any products or services it offers.
+            </p>
+          </section>
+
+          <section id="changes">
+            <h2>9. Changes to These Terms</h2>
+            <p>
+              We reserve the right to update or modify these Terms at any time. When we do,
+              we will revise the "Last updated" date at the top of this page. Your continued
+              use of the Site after any change constitutes your acceptance of the revised Terms.
+            </p>
+            <p>
+              We encourage you to review these Terms periodically. If a change materially
+              affects your rights, we will make reasonable efforts to notify you (for example,
+              by posting a notice on the Site).
+            </p>
+          </section>
+
+          <section id="governing-law">
+            <h2>10. Governing Law</h2>
+            <p>
+              These Terms are governed by and construed in accordance with the laws of the
+              Province of Ontario and the federal laws of Canada applicable therein, without
+              regard to conflict of law principles. Any dispute arising out of or relating to
+              these Terms or your use of the Site shall be subject to the exclusive jurisdiction
+              of the courts located in Ontario, Canada.
+            </p>
+          </section>
+
+          <section id="contact">
+            <h2>11. Contact</h2>
+            <p>
+              If you have questions about these Terms, please contact us at:
+            </p>
+            <p>
+              <a href="mailto:followmoney.ca@gmail.com">followmoney.ca@gmail.com</a>
+            </p>
+          </section>
+
+        </article>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────── */
+  .hero { padding-block: 4rem 3rem; }
+  .hero__inner { display: flex; flex-direction: column; gap: 1rem; }
+  .hero__title {
+    color: var(--color-cream);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+  .hero__meta {
+    font-size: var(--text-xs);
+    color: rgba(242,235,224,0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── Layout ───────────────────────────────────────── */
+  .page__inner {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  /* ── TOC ──────────────────────────────────────────── */
+  .toc {
+    position: sticky;
+    top: 5rem;
+    background: var(--color-cream-dark);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+  }
+  .toc__heading {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.85rem;
+  }
+  .toc ol {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    list-style: none;
+    padding: 0;
+    counter-reset: toc;
+  }
+  .toc a {
+    font-size: var(--text-sm);
+    color: var(--color-text-mid);
+    transition: color var(--transition);
+    line-height: 1.4;
+  }
+  .toc a:hover { color: var(--color-text-dark); }
+
+  /* ── Prose ────────────────────────────────────────── */
+  .prose {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .prose section {
+    padding-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .prose section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .prose h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-dark);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .prose p {
+    color: var(--color-text-mid);
+    line-height: 1.85;
+    margin-bottom: 1rem;
+    font-size: var(--text-body);
+  }
+  .prose p:last-child { margin-bottom: 0; }
+
+  .prose strong {
+    font-weight: 600;
+    color: var(--color-text-dark);
+  }
+
+  .prose ul, .prose ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .prose ul { list-style: disc; }
+  .prose ol { list-style: decimal; }
+
+  .prose li {
+    color: var(--color-text-mid);
+    line-height: 1.75;
+    font-size: var(--text-body);
+  }
+
+  .prose a {
+    color: var(--color-brown-cta);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(75,53,32,0.3);
+    transition: text-decoration-color var(--transition);
+  }
+  .prose a:hover { text-decoration-color: var(--color-brown-cta); }
+
+  /* ── Responsive ───────────────────────────────────── */
+  @media (max-width: 768px) {
+    .page__inner { grid-template-columns: 1fr; }
+    .toc { position: static; }
+  }
+</style>

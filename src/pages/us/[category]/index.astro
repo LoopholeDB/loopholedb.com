@@ -21,33 +21,48 @@ export async function getStaticPaths() {
 }
 
 const categoryIcons: Record<string, string> = {
-  'consumer-rights':        '🛒',
-  'digital-privacy':        '🔐',
-  'education':              '🎓',
-  'employment-labor':       '💼',
-  'estate-planning':        '📜',
-  'financial-tax':          '💰',
-  'government-bureaucracy': '🏛️',
-  'healthcare':             '🏥',
-  'housing-real-estate':    '🏠',
-  'insurance':              '🛡️',
-  'small-business':         '🏪',
-  'travel':                 '✈️',
+  'credit-cards':           '💳',
+  'care-about-privacy':     '🔐',
+  'saving-for-retirement':  '🎓',
+  'have-a-job':             '💼',
+  'planning-your-future':   '📜',
+  'pay-taxes':              '💰',
+  'dealing-with-government':'🏛️',
+  'have-medical-bills':     '🏥',
+  'own-a-home':             '🏠',
+  'have-insurance':         '🛡️',
+  'run-a-business':         '🏪',
+  'travel-often':           '✈️',
+};
+
+const categoryLabels: Record<string, string> = {
+  'credit-cards':           'If You Have a Credit Card',
+  'care-about-privacy':     'If You Care About Privacy',
+  'saving-for-retirement':  "If You're Saving for Retirement",
+  'have-a-job':             'If You Have a Job',
+  'planning-your-future':   "If You're Planning Your Future",
+  'pay-taxes':              'If You Pay Taxes',
+  'dealing-with-government':"If You're Dealing With Government",
+  'have-medical-bills':     'If You Have Medical Bills',
+  'own-a-home':             'If You Own a Home',
+  'have-insurance':         'If You Have Insurance',
+  'run-a-business':         'If You Run a Business',
+  'travel-often':           'If You Travel',
 };
 
 const categoryDescriptions: Record<string, string> = {
-  'consumer-rights':        'Know your rights as a buyer. Chargebacks, warranties, refunds, and protections against deceptive practices.',
-  'digital-privacy':        'Data rights, surveillance law, platform accountability, and what companies can legally do with your information.',
-  'education':              'Student rights, disability accommodations, disciplinary procedures, and financial aid rules.',
-  'employment-labor':       'Wages, wrongful termination, workplace safety, non-competes, and employee classification rules.',
-  'estate-planning':        'Wills, trusts, probate, power of attorney, and what happens to assets when there is no plan.',
-  'financial-tax':          'Tax obligations, IRS procedures, debt collection limits, bankruptcy rules, and financial disclosures.',
-  'government-bureaucracy': 'FOIA requests, administrative appeals, licensing disputes, and navigating federal and state agencies.',
-  'healthcare':             'Billing rights, surprise charges, insurance denials, HIPAA, and hospital charity care programs.',
-  'housing-real-estate':    'Tenant protections, eviction rules, fair housing, zoning, and landlord disclosure requirements.',
-  'insurance':              'Policy obligations, claim denials, bad faith practices, and what insurers must cover by law.',
-  'small-business':         'Business formation, contracts, licensing, liability, and regulatory compliance for entrepreneurs.',
-  'travel':                 'Passenger rights, flight delays, hotel disputes, visa rules, and travel insurance coverage.',
+  'credit-cards':           'Chargebacks, billing disputes, fraud protection, and rights you have as a cardholder that most people never use.',
+  'care-about-privacy':     'Data rights, opt-out requests, what companies can legally collect, and how to make them delete your information.',
+  'saving-for-retirement':  'Tax-advantaged account strategies, rollovers, contribution rules, and loopholes that grow your savings faster.',
+  'have-a-job':             'Wage theft, overtime rules, misclassification, non-competes, and workplace rights your employer may not tell you about.',
+  'planning-your-future':   'Wills, beneficiary designations, probate shortcuts, and ways to pass on assets without a lawyer or court.',
+  'pay-taxes':              'Legal tax reduction strategies, IRS procedures, deductions, and loopholes that reduce what you owe.',
+  'dealing-with-government':'How to get records, appeal decisions, dispute fines, and navigate government agencies without hiring a lawyer.',
+  'have-medical-bills':     'Charity care programs, billing error disputes, surprise bill protections, and ways to reduce what hospitals charge.',
+  'own-a-home':             'Property tax exemptions, homestead protections, capital gains exclusions, and rights homeowners often overlook.',
+  'have-insurance':         'Claim rights, bad faith protections, diminished value claims, and what your insurer must cover by law.',
+  'run-a-business':         'Tax strategies, liability protections, home office rules, and legal loopholes built specifically for business owners.',
+  'travel-often':           'Passenger rights, compensation for delays and bumping, and protections most travellers never claim.',
 };
 
 const difficultyOrder: Record<string, number> = {
@@ -57,7 +72,7 @@ const difficultyOrder: Record<string, number> = {
 const { categorySlug, entries } = Astro.props;
 
 // Derive display name from the first entry's category field
-const categoryLabel = entries[0]?.data.category ?? categorySlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+const categoryLabel = categoryLabels[categorySlug] ?? categorySlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 const icon = categoryIcons[categorySlug] ?? '⚖️';
 const description = categoryDescriptions[categorySlug] ?? '';
 

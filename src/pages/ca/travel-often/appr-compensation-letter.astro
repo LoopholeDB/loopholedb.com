@@ -1,0 +1,322 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import Footer from '../../../components/Footer.astro';
+---
+
+<Layout
+  title="APPR Airline Compensation Claim Letter — LoopholeDB"
+  description="Free fill-in-the-blank letter claiming compensation under Canada's Air Passenger Protection Regulations (APPR) for flight delays, cancellations, or denied boarding. Print or save as PDF."
+>
+  <Nav />
+  <main>
+    <div class="template-toolbar no-print">
+      <div class="toolbar-inner">
+        <a href="/ca/travel-often/appr-compensation-rights" class="toolbar-back">← APPR Compensation Rights</a>
+        <div class="toolbar-actions">
+          <p class="toolbar-hint">Fill in the <mark>[BRACKETED FIELDS]</mark>, then print or save as PDF.</p>
+          <button onclick="window.print()" class="btn btn--primary">Print / Save as PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-wrap">
+      <article class="document">
+
+        <div class="doc-sender">
+          <p>[YOUR FULL NAME]</p>
+          <p>[YOUR STREET ADDRESS]</p>
+          <p>[CITY, PROVINCE, POSTAL CODE]</p>
+          <p>[YOUR PHONE NUMBER]</p>
+          <p>[YOUR EMAIL ADDRESS]</p>
+        </div>
+
+        <p class="doc-date">[DATE]</p>
+
+        <div class="doc-recipient">
+          <p>Customer Relations Department</p>
+          <p>[AIRLINE NAME]</p>
+          <p>[AIRLINE MAILING ADDRESS OR CUSTOMER RELATIONS EMAIL]</p>
+        </div>
+
+        <p class="doc-re"><strong>Re: Compensation Claim under Air Passenger Protection Regulations (APPR), SOR/2019-150</strong></p>
+
+        <p class="doc-re"><strong>Flight Details:</strong></p>
+        <table class="ref-table">
+          <tr><td>Airline / Flight Number:</td><td>[AIRLINE NAME] Flight [FLIGHT NUMBER]</td></tr>
+          <tr><td>Date of Travel:</td><td>[DATE OF FLIGHT]</td></tr>
+          <tr><td>Origin Airport:</td><td>[DEPARTURE AIRPORT — e.g., YYZ]</td></tr>
+          <tr><td>Destination Airport:</td><td>[DESTINATION AIRPORT — e.g., YVR]</td></tr>
+          <tr><td>Scheduled Departure:</td><td>[SCHEDULED DEPARTURE TIME]</td></tr>
+          <tr><td>Actual / Rebooked Arrival:</td><td>[ACTUAL OR REBOOKED ARRIVAL TIME]</td></tr>
+          <tr><td>Delay to Final Destination:</td><td>[X hours Y minutes]</td></tr>
+          <tr><td>Booking Confirmation Number:</td><td>[CONFIRMATION NUMBER]</td></tr>
+          <tr><td>Reason Given by Airline:</td><td>[REASON STATED BY AIRLINE, e.g., "mechanical," "crew scheduling," "weather"]</td></tr>
+        </table>
+
+        <p>Dear Customer Relations Representative:</p>
+
+        <p>
+          I am writing to formally claim compensation under Canada's <em>Air Passenger Protection Regulations</em> (APPR), SOR/2019-150, for the disruption I experienced on [AIRLINE NAME] Flight [FLIGHT NUMBER] on [DATE OF FLIGHT].
+        </p>
+
+        <p>
+          My flight was [select one: <em>delayed by [X hours]</em> / <em>cancelled</em> / <em>I was denied boarding involuntarily</em>]. The disruption resulted in my arriving at my final destination approximately [X hours] later than scheduled.
+        </p>
+
+        <p><strong>Applicable Compensation</strong></p>
+        <p>
+          The disruption was [choose one: <em>within the airline's control and unrelated to safety</em> / <em>an involuntary denied boarding due to overbooking or operational reasons within the airline's control</em>]. [AIRLINE NAME] is a [large / small] carrier under the APPR. Accordingly, the compensation I am entitled to is:
+        </p>
+
+        <div class="comp-table-wrap">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Type of Disruption</th>
+                <th>Delay to Destination</th>
+                <th>Large Airline</th>
+                <th>Small Airline</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="3">Delay / Cancellation (within airline control, not safety)</td>
+                <td>3–6 hours</td>
+                <td>$400</td>
+                <td>$125</td>
+              </tr>
+              <tr>
+                <td>6–9 hours</td>
+                <td>$700</td>
+                <td>$250</td>
+              </tr>
+              <tr>
+                <td>9+ hours</td>
+                <td>$1,000</td>
+                <td>$500</td>
+              </tr>
+              <tr>
+                <td rowspan="3">Denied Boarding (involuntary, within airline control)</td>
+                <td>0–6 hours</td>
+                <td>$900</td>
+                <td>$125</td>
+              </tr>
+              <tr>
+                <td>6–9 hours</td>
+                <td>$1,800</td>
+                <td>$250</td>
+              </tr>
+              <tr>
+                <td>9+ hours</td>
+                <td>$2,400</td>
+                <td>$500</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Based on a delay of [X hours] to my final destination, the compensation I am entitled to under the APPR is:
+        </p>
+
+        <div class="demand-amount">
+          <p>Compensation Claimed: <strong>$[AMOUNT] CAD</strong></p>
+        </div>
+
+        <p>
+          [Optional — include if applicable:] I also note that the airline claimed this disruption was due to [STATED REASON, e.g., "a safety issue"]. However, a safety exemption under the APPR requires the airline to demonstrate that the defect was <strong>unforeseen</strong> and <strong>not within the airline's control</strong>. A routine maintenance issue that a properly maintained aircraft should not have experienced does not qualify. I request that you provide a full written explanation of the precise safety defect, when it was discovered, and why it could not have been anticipated through normal maintenance practices.
+        </p>
+
+        <p>
+          I request payment of <strong>$[AMOUNT] CAD</strong> within <strong>30 days</strong> of this letter. If I do not receive payment or a written explanation of denial by <strong>[DATE — 30 days from letter date]</strong>, I will file a formal complaint with the Canadian Transportation Agency (CTA) at <em>otc-cta.gc.ca/eng/air-travel-complaints</em>.
+        </p>
+
+        <p>Sincerely,</p>
+
+        <div class="doc-sig">
+          <div class="sig-line"></div>
+          <p>[YOUR PRINTED NAME]</p>
+        </div>
+
+        <p class="doc-enclosures">
+          <strong>Enclosures:</strong><br />
+          1. Boarding pass or booking confirmation<br />
+          2. Delay / cancellation notice or screenshots from airline<br />
+          3. [Flight tracking data from FlightAware / Flightradar24 if relevant]<br />
+          4. [Any written or email communication from the airline regarding the disruption]
+        </p>
+
+        <div class="doc-footer-note no-print">
+          <p><strong>Tips:</strong> If the airline denies your claim or does not respond within 30 days, file a CTA complaint at <a href="https://otc-cta.gc.ca/eng/air-travel-complaints" target="_blank">otc-cta.gc.ca</a> — the process is free and adjudicators rule in favour of passengers in the majority of cases involving improper safety/weather exemptions. Check FlightAware or Flightradar24 for the inbound aircraft's actual arrival time — if the aircraft was already late before your scheduled departure, a weather excuse for your delay may not hold up. Compensation is owed per passenger; a family of four is entitled to four separate payments.</p>
+        </div>
+
+      </article>
+    </div>
+  </main>
+  <div class="no-print"><Footer /></div>
+</Layout>
+
+<style>
+  .template-toolbar {
+    background: var(--color-espresso);
+    padding: 0.85rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .toolbar-inner {
+    max-width: var(--max-w);
+    margin-inline: auto;
+    padding-inline: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .toolbar-back {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(242,235,224,0.6);
+    transition: color var(--transition);
+    white-space: nowrap;
+  }
+  .toolbar-back:hover { color: var(--color-cream); }
+  .toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .toolbar-hint {
+    font-size: var(--text-sm);
+    color: rgba(242,235,224,0.55);
+  }
+  .toolbar-hint mark {
+    background: rgba(242,235,224,0.15);
+    color: var(--color-cream);
+    border-radius: 3px;
+    padding: 0.1em 0.3em;
+  }
+
+  .doc-wrap {
+    background: var(--color-cream-dark);
+    min-height: 100vh;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  .document {
+    background: #fff;
+    max-width: 760px;
+    margin-inline: auto;
+    padding: 3.5rem 4rem;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #111;
+  }
+
+  .document p { margin-bottom: 1.1rem; }
+
+  .doc-sender { margin-bottom: 2rem; }
+  .doc-sender p { margin: 0; line-height: 1.55; }
+
+  .doc-date { margin-bottom: 1.5rem; }
+
+  .doc-recipient { margin-bottom: 1.75rem; }
+  .doc-recipient p { margin: 0; line-height: 1.55; }
+
+  .doc-re { margin-bottom: 0.75rem; }
+
+  .ref-table {
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+  .ref-table td {
+    padding: 0.2rem 1rem 0.2rem 0;
+    vertical-align: top;
+  }
+  .ref-table td:first-child {
+    color: #555;
+    white-space: nowrap;
+    font-style: italic;
+    min-width: 200px;
+  }
+
+  .comp-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 1.25rem;
+  }
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    font-family: Georgia, serif;
+  }
+  .comp-table th {
+    background: #f0ebe2;
+    border: 1px solid #ccc;
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-size: 0.82rem;
+  }
+  .comp-table td {
+    border: 1px solid #ccc;
+    padding: 0.5rem 0.75rem;
+    vertical-align: middle;
+  }
+
+  .demand-amount {
+    border: 2px solid #111;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    margin: 1.5rem 0;
+    font-size: 1.1rem;
+  }
+  .demand-amount p { margin: 0; }
+
+  .doc-sig {
+    margin: 2rem 0 1.5rem;
+  }
+  .sig-line {
+    width: 260px;
+    border-bottom: 1px solid #888;
+    margin-bottom: 0.5rem;
+  }
+
+  .doc-enclosures {
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .doc-footer-note {
+    margin-top: 2rem;
+    padding: 1rem 1.25rem;
+    background: #f5f0e8;
+    border-left: 3px solid #b08860;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: #555;
+    border-radius: 0 4px 4px 0;
+  }
+  .doc-footer-note p { margin: 0; }
+  .doc-footer-note a { color: #4B3520; }
+
+  @media print {
+    .no-print { display: none !important; }
+    .doc-wrap { background: #fff; padding: 0; }
+    .document { box-shadow: none; border: none; padding: 0; max-width: 100%; }
+  }
+
+  @media (max-width: 600px) {
+    .document { padding: 2rem 1.5rem; }
+    .toolbar-inner { flex-direction: column; align-items: flex-start; }
+    .ref-table td:first-child { min-width: 130px; }
+  }
+</style>

@@ -1,0 +1,684 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Find Your Loopholes — LoopholeDB Quiz"
+  description="Answer a few quick questions about your life situation and we'll show you exactly which legal loopholes apply to you — for free."
+>
+  <Nav />
+  <main>
+
+    <!-- Hero -->
+    <section class="quiz-hero section--dark">
+      <div class="container quiz-hero__inner">
+        <span class="eyebrow">Personalized Results</span>
+        <h1 class="t-h1 quiz-hero__title">Find Your<br/><em>Loopholes</em></h1>
+        <p class="quiz-hero__sub">
+          Answer a few quick questions about your life situation and we'll show you
+          exactly which legal rights and loopholes apply to you — instantly, for free.
+        </p>
+      </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="section section--tinted">
+      <div class="container quiz-wrap">
+
+        <!-- Region pill -->
+        <div class="quiz-region" id="quizRegionBar">
+          <span class="quiz-region__label">Showing results for:</span>
+          <div class="nav__region" id="quizRegionToggle" role="group" aria-label="Select region">
+            <button class="nav__region-btn" data-region="us" aria-pressed="false">🇺🇸 US</button>
+            <button class="nav__region-btn" data-region="ca" aria-pressed="false">🇨🇦 CA</button>
+          </div>
+        </div>
+
+        <!-- Questions -->
+        <form id="quizForm" novalidate>
+
+          <fieldset class="quiz-group">
+            <legend class="quiz-group__legend">Your Home</legend>
+            <div class="quiz-checks">
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="own-a-home" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I own a home or pay a mortgage</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="quiz-group">
+            <legend class="quiz-group__legend">Your Money</legend>
+            <div class="quiz-checks">
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="pay-taxes" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I pay income taxes</span>
+              </label>
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="credit-cards" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I have a credit card</span>
+              </label>
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="have-insurance" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I have a car (and car insurance)</span>
+              </label>
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="saving-for-retirement" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I have investments or retirement accounts</span>
+              </label>
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="run-a-business" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I run or own a small business</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="quiz-group">
+            <legend class="quiz-group__legend">Your Health</legend>
+            <div class="quiz-checks">
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="have-medical-bills" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I have medical bills I'm struggling to pay</span>
+              </label>
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="have-medical-bills" data-secondary="true" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I have a disability or chronic condition</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="quiz-group">
+            <legend class="quiz-group__legend">Your Work</legend>
+            <div class="quiz-checks">
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="have-a-job" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I have a job (employed)</span>
+              </label>
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="have-a-job" data-secondary="true" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I'm a contractor or freelancer</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="quiz-group">
+            <legend class="quiz-group__legend">Your Life</legend>
+            <div class="quiz-checks">
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="planning-your-future" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I want to protect my family's future</span>
+              </label>
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="care-about-privacy" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I care about my online privacy</span>
+              </label>
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="travel-often" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I travel by plane</span>
+              </label>
+              <label class="quiz-check">
+                <input type="checkbox" name="cat" value="dealing-with-government" />
+                <span class="quiz-check__box"></span>
+                <span class="quiz-check__text">I've had trouble with a government agency</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="quiz-cta-wrap">
+            <p class="quiz-validation" id="quizValidation" aria-live="polite"></p>
+            <button type="submit" class="btn btn--primary quiz-submit" id="quizSubmit" disabled>
+              Show My Loopholes
+            </button>
+          </div>
+        </form>
+
+        <!-- Results -->
+        <div class="quiz-results" id="quizResults" aria-live="polite">
+          <div class="results-header" id="resultsHeader"></div>
+          <div class="results-grid" id="resultsGrid"></div>
+          <div class="results-footer">
+            <button class="btn btn--outline quiz-retake" id="quizRetake">Retake Quiz</button>
+            <a id="resultsBrowseAll" href="/us" class="btn btn--link">Browse all categories →</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ── Hero ── */
+  .quiz-hero {
+    padding-block: 4rem 3.5rem;
+  }
+  .quiz-hero__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 52ch;
+  }
+  .quiz-hero__title {
+    color: var(--color-cream);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+  .quiz-hero__title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--color-brown-mid);
+  }
+  .quiz-hero__sub {
+    font-size: 1.05rem;
+    color: rgba(242,235,224,0.65);
+    line-height: 1.75;
+    max-width: 50ch;
+  }
+
+  /* ── Quiz wrap ── */
+  .quiz-wrap {
+    max-width: 760px;
+  }
+
+  /* ── Region bar ── */
+  .quiz-region {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .quiz-region__label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  /* Reuse nav region pill styles */
+  .nav__region {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: var(--color-border);
+    border-radius: 999px;
+    padding: 3px;
+  }
+  .nav__region-btn {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-text-mid);
+    transition: background var(--transition), color var(--transition);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .nav__region-btn[aria-pressed="true"] {
+    background: var(--color-cream);
+    color: var(--color-text-dark);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .nav__region-btn:hover:not([aria-pressed="true"]) {
+    color: var(--color-text-dark);
+  }
+
+  /* ── Question groups ── */
+  .quiz-group {
+    border: none;
+    margin-bottom: 2rem;
+  }
+  .quiz-group__legend {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    margin-bottom: 0.85rem;
+    display: block;
+  }
+  .quiz-checks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+  }
+
+  /* ── Custom checkbox ── */
+  .quiz-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    user-select: none;
+  }
+  .quiz-check:hover {
+    border-color: var(--color-brown-mid);
+  }
+  .quiz-check input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .quiz-check__box {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 3px;
+    background: var(--color-cream-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+    transition: background var(--transition), border-color var(--transition);
+  }
+  .quiz-check__box::after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 9px;
+    border: 2px solid var(--color-cream);
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg) translateY(-1px);
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+  .quiz-check input:checked ~ .quiz-check__box {
+    background: var(--color-brown-cta);
+    border-color: var(--color-brown-cta);
+  }
+  .quiz-check input:checked ~ .quiz-check__box::after {
+    opacity: 1;
+  }
+  .quiz-check:has(input:checked) {
+    border-color: var(--color-brown-mid);
+    box-shadow: 0 2px 8px rgba(75,53,32,0.1);
+  }
+  .quiz-check__text {
+    font-size: var(--text-sm);
+    color: var(--color-text-mid);
+    line-height: 1.45;
+  }
+  .quiz-check:has(input:checked) .quiz-check__text {
+    color: var(--color-text-dark);
+    font-weight: 500;
+  }
+
+  /* ── Submit area ── */
+  .quiz-cta-wrap {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+  .quiz-submit {
+    padding: 0.9rem 2.25rem;
+  }
+  .quiz-submit:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .quiz-submit:disabled:hover { background: var(--color-brown-cta); }
+  .quiz-validation {
+    font-size: var(--text-sm);
+    color: #a03020;
+    font-weight: 500;
+  }
+
+  /* ── Results ── */
+  .quiz-results {
+    display: none;
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 2px solid var(--color-border);
+    animation: fadeSlideIn 0.4s ease forwards;
+  }
+  .quiz-results.is-visible {
+    display: block;
+  }
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .results-header {
+    margin-bottom: 2rem;
+  }
+  .results-header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 400;
+    color: var(--color-text-dark);
+    margin-bottom: 0.4rem;
+  }
+  .results-header p {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+
+  .results-footer {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    .quiz-checks { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+    .quiz-cta-wrap { flex-direction: column; align-items: flex-start; }
+    .quiz-region { flex-wrap: wrap; }
+  }
+</style>
+
+<style is:global>
+  /* Result cards — must be global because they are injected via innerHTML */
+  .result-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
+    cursor: pointer;
+  }
+  .result-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.09);
+    transform: translateY(-3px);
+    border-color: var(--color-brown-mid);
+  }
+  .result-card__chip {
+    display: inline-flex;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+    background: var(--color-cream-dark);
+    color: var(--color-text-mid);
+    border: 1px solid var(--color-border);
+    width: fit-content;
+  }
+  .result-card__title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    line-height: 1.35;
+    flex: 1;
+  }
+  .result-card__desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-mid);
+    line-height: 1.65;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .result-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-xs);
+  }
+  .result-card__region {
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+  .result-card__link {
+    color: var(--color-brown-cta);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    transition: letter-spacing var(--transition);
+  }
+  .result-card:hover .result-card__link { letter-spacing: 0.1em; }
+</style>
+
+<script>
+  // ── Loophole data ──────────────────────────────────────────────────────────
+  type Loophole = {
+    category: string;
+    requires?: string[]; // ALL of these categories must be checked for this loophole to appear
+    title: string;
+    url: string;
+    icon: string;
+    desc: string;
+    difficulty: string;
+    region: string;
+  };
+
+  const LOOPHOLES: Record<string, Loophole[]> = {
+    us: [
+      // own-a-home only — homestead is a standalone filing
+      { category: 'own-a-home',                                          title: 'Homestead Exemption',           url: '/us/own-a-home/homestead-exemption',                      icon: '🏠', difficulty: 'Easy',         region: '🇺🇸 Most States',  desc: 'Reduce your property tax bill and shield your home from creditors with a simple filing.' },
+      // pay-taxes + saving-for-retirement — it's a retirement account strategy, not just a tax move
+      { category: 'pay-taxes',  requires: ['pay-taxes', 'saving-for-retirement'],           title: 'Backdoor Roth IRA',             url: '/us/pay-taxes/backdoor-roth-ira',                        icon: '💰', difficulty: 'Intermediate', region: '🇺🇸 All States',   desc: 'High earners can contribute to a Roth IRA via a perfectly legal two-step conversion.' },
+      // credit-cards only — universal right
+      { category: 'credit-cards',                                        title: 'Credit Card Chargeback Rights', url: '/us/credit-cards/credit-card-chargeback-rights',         icon: '💳', difficulty: 'Easy',         region: '🇺🇸 All States',   desc: 'Dispute fraudulent or unfulfilled charges and get your money back — it\'s federal law.' },
+      // have-insurance only — car insurance claim
+      { category: 'have-insurance',                                      title: 'Diminished Value Claim',        url: '/us/have-insurance/diminished-value-claim',              icon: '🛡️', difficulty: 'Intermediate', region: '🇺🇸 Most States',  desc: 'After a collision, your car is worth less even when repaired. Claim that loss from the at-fault insurer.' },
+      // saving-for-retirement + planning-your-future — needs both a 529 and a Roth IRA
+      { category: 'saving-for-retirement', requires: ['saving-for-retirement', 'planning-your-future'], title: '529 to Roth IRA Rollover', url: '/us/saving-for-retirement/529-to-roth-ira-rollover', icon: '🎓', difficulty: 'Easy',         region: '🇺🇸 All States',   desc: 'Leftover 529 college savings can now be rolled into a Roth IRA tax-free, thanks to SECURE 2.0.' },
+      // run-a-business + own-a-home — you rent your home to your business
+      { category: 'run-a-business', requires: ['run-a-business', 'own-a-home'],             title: 'The Augusta Rule',              url: '/us/run-a-business/augusta-rule',                        icon: '🏪', difficulty: 'Easy',         region: '🇺🇸 All States',   desc: 'Rent your home to your own business for up to 14 days per year — and pay zero tax on that income.' },
+      // have-medical-bills only — applies to anyone with a hospital bill
+      { category: 'have-medical-bills',                                  title: 'Hospital Charity Care',         url: '/us/have-medical-bills/hospital-charity-care',           icon: '🏥', difficulty: 'Easy',         region: '🇺🇸 All States',   desc: 'Nonprofit hospitals must offer free or reduced-cost care by law — most patients never ask.' },
+      // have-a-job only — employment classification issue
+      { category: 'have-a-job',                                          title: 'Overtime Misclassification',    url: '/us/have-a-job/overtime-misclassification',              icon: '💼', difficulty: 'Intermediate', region: '🇺🇸 All States',   desc: 'Millions of workers are wrongly classified as exempt from overtime pay. You may be owed back wages.' },
+      // have-a-job only — needs a direct deposit / regular income
+      { category: 'have-a-job',                                          title: 'Bank Account Bonus Churning',   url: '/us/have-a-job/bank-account-bonus-churning',             icon: '🏦', difficulty: 'Easy',         region: '🇺🇸 All States',   desc: 'Earn $300–$900 per bank by opening a checking account, meeting the direct deposit requirement, and moving on.' },
+      // planning-your-future + saving-for-retirement — you need investment/retirement accounts to designate
+      { category: 'planning-your-future', requires: ['planning-your-future', 'saving-for-retirement'], title: 'Transfer on Death Accounts', url: '/us/planning-your-future/transfer-on-death-accounts', icon: '📜', difficulty: 'Easy',        region: '🇺🇸 Most States',  desc: 'Pass assets directly to beneficiaries without probate — no lawyer, no court, no delay.' },
+      // care-about-privacy only — universal right
+      { category: 'care-about-privacy',                                  title: 'Data Broker Opt-Out',           url: '/us/care-about-privacy/data-broker-opt-out',             icon: '🔐', difficulty: 'Easy',         region: '🇺🇸 All States',   desc: 'Hundreds of companies sell your personal data. You have the right to demand they delete it.' },
+      // travel-often only — triggered by flying
+      { category: 'travel-often',                                        title: 'Airline Bumping Compensation',  url: '/us/travel-often/airline-involuntary-bumping-compensation', icon: '✈️', difficulty: 'Easy',       region: '🇺🇸 All States',   desc: 'If an airline bumps you involuntarily, federal law mandates cash compensation up to $1,550.' },
+      // dealing-with-government only — universal right
+      { category: 'dealing-with-government',                             title: 'FOIA Requests',                 url: '/us/dealing-with-government/foia-requests',              icon: '🏛️', difficulty: 'Easy',         region: '🇺🇸 All States',   desc: 'Force any federal agency to hand over documents and records you\'re legally entitled to see.' },
+    ],
+    ca: [
+      // own-a-home + pay-taxes — it's a capital gains tax exemption on home sale
+      { category: 'own-a-home', requires: ['own-a-home', 'pay-taxes'],   title: 'Principal Residence Exemption', url: '/ca/own-a-home/principal-residence-exemption',           icon: '🏠', difficulty: 'Easy',         region: '🇨🇦 All Provinces', desc: 'Eliminate capital gains tax when you sell your home by claiming the principal residence exemption.' },
+      // own-a-home + pay-taxes — converts mortgage interest to a tax deduction
+      { category: 'pay-taxes',  requires: ['own-a-home', 'pay-taxes'],   title: 'The Smith Manoeuvre',           url: '/ca/pay-taxes/smith-manoeuvre',                          icon: '💰', difficulty: 'Advanced',     region: '🇨🇦 All Provinces', desc: 'Convert your non-deductible mortgage interest into a tax deduction using this legal strategy.' },
+      // credit-cards only — universal right
+      { category: 'credit-cards',                                        title: 'Credit Card Chargeback Rights', url: '/ca/credit-cards/credit-card-chargeback-rights',         icon: '💳', difficulty: 'Easy',         region: '🇨🇦 All Provinces', desc: 'Canadian cardholders have strong chargeback rights for fraud, billing errors, and undelivered goods.' },
+      // have-insurance only — car insurance claim
+      { category: 'have-insurance',                                      title: 'Diminished Value Claim',        url: '/ca/have-insurance/diminished-value-claim',              icon: '🛡️', difficulty: 'Intermediate', region: '🇨🇦 All Provinces', desc: 'Recover the loss in market value of your repaired vehicle from the at-fault driver\'s insurer.' },
+      // saving-for-retirement + planning-your-future — needs a RESP (for a child) and an RRSP
+      { category: 'saving-for-retirement', requires: ['saving-for-retirement', 'planning-your-future'], title: 'RESP-RRSP Conversion', url: '/ca/saving-for-retirement/resp-rrsp-conversion', icon: '🎓', difficulty: 'Easy', region: '🇨🇦 All Provinces', desc: 'Roll unused RESP savings into your RRSP — up to $50,000 — without triggering income tax.' },
+      // run-a-business + pay-taxes — a tax strategy on share sale, not standalone
+      { category: 'run-a-business', requires: ['run-a-business', 'pay-taxes'],               title: 'Lifetime Capital Gains Exemption', url: '/ca/run-a-business/lifetime-capital-gains-exemption', icon: '🏪', difficulty: 'Advanced', region: '🇨🇦 All Provinces', desc: 'Small business owners can shelter up to $1M+ in capital gains on the sale of their shares — tax-free.' },
+      // have-medical-bills only — needs a disability or condition
+      { category: 'have-medical-bills',                                  title: 'Disability Tax Credit',         url: '/ca/have-medical-bills/disability-tax-credit',           icon: '🏥', difficulty: 'Easy',         region: '🇨🇦 All Provinces', desc: 'A non-refundable tax credit worth thousands for Canadians with eligible physical or mental impairments.' },
+      // have-medical-bills + pay-taxes — it's a tax credit, needs to be filing taxes
+      { category: 'have-medical-bills', requires: ['have-medical-bills', 'pay-taxes'],       title: 'Medical Expense Tax Credit',    url: '/ca/have-medical-bills/hospital-financial-assistance',  icon: '💊', difficulty: 'Easy',         region: '🇨🇦 All Provinces', desc: 'Claim a broad range of medical costs — many Canadians overlook eligible expenses and leave money on the table.' },
+      // have-a-job only — employment classification issue
+      { category: 'have-a-job',                                          title: 'Worker Misclassification CPP/EI', url: '/ca/have-a-job/worker-misclassification-cpp-ei',       icon: '💼', difficulty: 'Medium',       region: '🇨🇦 All Provinces', desc: 'If you\'re treated as an employee but classified as a contractor, you may be owed CPP and EI contributions.' },
+      // have-a-job only — needs a paycheque / direct deposit
+      { category: 'have-a-job',                                          title: 'Bank Account Bonus Hunting',    url: '/ca/have-a-job/bank-account-bonus-hunting',              icon: '🏦', difficulty: 'Easy',         region: '🇨🇦 All Provinces', desc: 'Earn $300–$700 CAD per bank by opening a chequing account, routing your paycheque, and moving on.' },
+      // planning-your-future + saving-for-retirement — needs registered accounts to designate
+      { category: 'planning-your-future', requires: ['planning-your-future', 'saving-for-retirement'], title: 'Beneficiary Designation Probate Bypass', url: '/ca/planning-your-future/beneficiary-designation-probate-bypass', icon: '📜', difficulty: 'Easy', region: '🇨🇦 All Provinces', desc: 'Name beneficiaries on registered accounts to pass assets directly — skipping probate entirely.' },
+      // care-about-privacy only — universal right
+      { category: 'care-about-privacy',                                  title: 'PIPEDA Data Access Rights',     url: '/ca/care-about-privacy/pipeda-personal-data-access',     icon: '🔐', difficulty: 'Easy',         region: '🇨🇦 All Provinces', desc: 'Request, correct, or delete the personal data any company holds on you under federal privacy law.' },
+      // travel-often only — triggered by flying
+      { category: 'travel-often',                                        title: 'APPR Compensation',             url: '/ca/travel-often/appr-compensation-rights',              icon: '✈️', difficulty: 'Easy',         region: '🇨🇦 All Provinces', desc: 'Canada\'s Air Passenger Protection Regulations entitle you to cash for delays, cancellations, and bumping.' },
+      // dealing-with-government only — universal right
+      { category: 'dealing-with-government',                             title: 'Access to Information Requests', url: '/ca/dealing-with-government/access-to-information-requests', icon: '🏛️', difficulty: 'Easy',    region: '🇨🇦 All Provinces', desc: 'Every Canadian has the right to request federal government records under the Access to Information Act.' },
+    ],
+  };
+
+  // ── Region ──────────────────────────────────────────────────────────────────
+  function getRegion(): string {
+    return localStorage.getItem('lhdb-region') ?? 'us';
+  }
+
+  function setRegion(r: string) {
+    localStorage.setItem('lhdb-region', r);
+    currentRegion = r;
+    updateRegionBtns(r);
+    // Update "browse all" link
+    const browseAll = document.getElementById('resultsBrowseAll') as HTMLAnchorElement | null;
+    if (browseAll) browseAll.href = `/${r}`;
+    // If results are showing, re-run
+    const results = document.getElementById('quizResults');
+    if (results?.classList.contains('is-visible')) {
+      showResults();
+    }
+  }
+
+  function updateRegionBtns(r: string) {
+    document.querySelectorAll<HTMLButtonElement>('#quizRegionToggle .nav__region-btn').forEach(btn => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.region === r));
+    });
+  }
+
+  let currentRegion = getRegion();
+  updateRegionBtns(currentRegion);
+
+  // Update browse all link on load
+  const browseAllInit = document.getElementById('resultsBrowseAll') as HTMLAnchorElement | null;
+  if (browseAllInit) browseAllInit.href = `/${currentRegion}`;
+
+  document.querySelectorAll<HTMLButtonElement>('#quizRegionToggle .nav__region-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.dataset.region) setRegion(btn.dataset.region);
+    });
+  });
+
+  // ── Checkbox enable/disable submit ──────────────────────────────────────────
+  const form    = document.getElementById('quizForm') as HTMLFormElement;
+  const submit  = document.getElementById('quizSubmit') as HTMLButtonElement;
+  const validEl = document.getElementById('quizValidation') as HTMLElement;
+
+  function getChecked(): string[] {
+    const boxes = form.querySelectorAll<HTMLInputElement>('input[name="cat"]:checked');
+    // Deduplicate categories
+    return [...new Set([...boxes].map(b => b.value))];
+  }
+
+  form.addEventListener('change', () => {
+    const checked = getChecked();
+    submit.disabled = checked.length === 0;
+    if (checked.length > 0) validEl.textContent = '';
+  });
+
+  // ── Show results ────────────────────────────────────────────────────────────
+  function showResults() {
+    const categories = getChecked();
+    const region = currentRegion;
+    const allLoopholes = LOOPHOLES[region] ?? [];
+
+    // Collect matching loopholes (deduplicate by url)
+    const seen = new Set<string>();
+    const matches: typeof allLoopholes = [];
+    for (const cat of categories) {
+      for (const l of allLoopholes) {
+        if (l.category === cat && !seen.has(l.url)) {
+          // If the loophole requires multiple categories, all must be checked
+          if (l.requires && !l.requires.every(r => categories.includes(r))) continue;
+          seen.add(l.url);
+          matches.push(l);
+        }
+      }
+    }
+
+    // Sort: Easy first, then Intermediate/Medium, then Advanced/Hard
+    const difficultyRank: Record<string, number> = { 'Easy': 0, 'Intermediate': 1, 'Medium': 1, 'Advanced': 2, 'Hard': 2 };
+    matches.sort((a, b) => (difficultyRank[a.difficulty] ?? 1) - (difficultyRank[b.difficulty] ?? 1));
+
+    const header = document.getElementById('resultsHeader')!;
+    const grid   = document.getElementById('resultsGrid')!;
+    const results = document.getElementById('quizResults')!;
+
+    // Render header
+    header.innerHTML = `
+      <h2>${matches.length} loophole${matches.length !== 1 ? 's' : ''} apply to you</h2>
+      <p>Based on your answers — ${region.toUpperCase()} results. Click any guide to read more.</p>
+    `;
+
+    // Render cards
+    grid.innerHTML = matches.map(l => `
+      <a href="${l.url}" class="result-card">
+        <div class="result-card__chip">${l.difficulty}</div>
+        <div class="result-card__title">${l.title}</div>
+        <p class="result-card__desc">${l.desc}</p>
+        <div class="result-card__footer">
+          <span class="result-card__region">${l.region}</span>
+          <span class="result-card__link">Read Guide →</span>
+        </div>
+      </a>
+    `).join('');
+
+    results.classList.add('is-visible');
+  }
+
+  // ── Form submit ─────────────────────────────────────────────────────────────
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const checked = getChecked();
+    if (checked.length === 0) {
+      validEl.textContent = 'Please select at least one option above.';
+      return;
+    }
+    validEl.textContent = '';
+    showResults();
+    // Scroll to results
+    document.getElementById('quizResults')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // ── Retake ──────────────────────────────────────────────────────────────────
+  document.getElementById('quizRetake')?.addEventListener('click', () => {
+    // Uncheck all
+    form.querySelectorAll<HTMLInputElement>('input[name="cat"]').forEach(b => { b.checked = false; });
+    submit.disabled = true;
+    validEl.textContent = '';
+    document.getElementById('quizResults')!.classList.remove('is-visible');
+    // Scroll back to top of quiz
+    document.getElementById('quizForm')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>

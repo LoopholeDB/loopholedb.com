@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import Nav from '../../../components/Nav.astro';
 import Footer from '../../../components/Footer.astro';
+import AiPromptModal from '../../../components/AiPromptModal.astro';
 
 export async function getStaticPaths() {
   const loopholes = await getCollection('loopholes');
@@ -16,7 +17,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { title, category, difficulty, risk_level, applicable_states, last_verified, potential_savings, template_url, template_label } = entry.data;
+const { title, category, difficulty, risk_level, applicable_states, last_verified, potential_savings, template_url, template_label, ai_prompt } = entry.data;
 
 const riskColour: Record<string, string> = {
   None:         'badge--green',
@@ -111,6 +112,11 @@ const jsonLd = {
             <span class="badge__val">{last_verified}</span>
           </span>
         </div>
+
+        <AiPromptModal
+          prompt={ai_prompt ?? `Help me understand and apply the "${title}" loophole to my situation. Ask me questions about my circumstances and then give me a personalized step-by-step action plan.`}
+          title={title}
+        />
       </div>
     </section>
 
@@ -160,9 +166,15 @@ const jsonLd = {
           )}
 
           <div class="sidebar-card sidebar-card--cta">
-            <h2 class="sidebar-card__heading">Need Specific Help?</h2>
-            <p>If you need tailored guidance applying this to your situation, our consulting service can help.</p>
-            <a href="/#contact" class="btn btn--primary" style="margin-top:1.25rem; display:inline-flex;">Get in Touch →</a>
+            <span class="sidebar-ai-icon" aria-hidden="true">✦</span>
+            <h2 class="sidebar-card__heading">Chat with AI Agent</h2>
+            <p>Fill in your details and we'll open a personalised prompt in Perplexity AI.</p>
+            <button
+              id="ai-modal-trigger-sidebar"
+              class="btn btn--primary"
+              type="button"
+              style="margin-top:1.25rem; display:inline-flex; width:100%; justify-content:center;"
+            >Start Chat →</button>
           </div>
 
           <a href="/#services" class="sidebar-back">← Back to All Categories</a>
@@ -372,6 +384,13 @@ const jsonLd = {
     margin-bottom: 1.25rem;
   }
   .sidebar-card--cta .sidebar-card__heading { color: var(--color-cream); }
+
+  .sidebar-ai-icon {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: rgba(242,235,224,0.6);
+  }
 
   .sidebar-dl {
     display: flex;

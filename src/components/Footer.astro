@@ -44,7 +44,12 @@ const links = {
         <ul>
           {links.legal.map(l => (
             <li>
-              <a href={l === 'Disclaimer' ? '/disclaimer' : '#'}>{l}</a>
+              <a href={
+                l === 'Disclaimer' ? '/disclaimer' :
+                l === 'Privacy Policy' ? '/privacy' :
+                l === 'Terms of Service' ? '/terms' :
+                '#'
+              }>{l}</a>
             </li>
           ))}
         </ul>

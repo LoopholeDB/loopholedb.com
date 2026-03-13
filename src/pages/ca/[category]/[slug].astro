@@ -3,10 +3,10 @@ import { getCollection, render } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import Nav from '../../../components/Nav.astro';
 import Footer from '../../../components/Footer.astro';
+import AiPromptModal from '../../../components/AiPromptModal.astro';
 
 export async function getStaticPaths() {
   const loopholes = await getCollection('loopholes_ca');
-  // CA entries: entry.id = frontmatter slug, entry.data.category = category slug
   return loopholes.map(entry => ({
     params: { category: entry.data.category, slug: entry.id },
     props: { entry },
@@ -15,21 +15,21 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { title, category, difficulty, summary, lastUpdated, tags, template_url, template_label } = entry.data;
+const { title, category, difficulty, summary, lastUpdated, tags, template_url, template_label, ai_prompt } = entry.data;
 
 const categoryLabels: Record<string, string> = {
-  'consumer-rights':        'Consumer Rights',
-  'digital-privacy':        'Digital Privacy',
-  'education':              'Education',
-  'employment-labor':       'Employment & Labour',
-  'estate-planning':        'Estate Planning',
-  'financial-tax':          'Financial & Tax',
-  'government-bureaucracy': 'Government & Bureaucracy',
-  'healthcare':             'Healthcare',
-  'housing-real-estate':    'Housing & Real Estate',
-  'insurance':              'Insurance',
-  'small-business':         'Small Business',
-  'travel':                 'Travel',
+  'credit-cards':           'If You Have a Credit Card',
+  'care-about-privacy':     'If You Care About Privacy',
+  'saving-for-retirement':  "If You're Saving for Retirement",
+  'have-a-job':             'If You Have a Job',
+  'planning-your-future':   "If You're Planning Your Future",
+  'pay-taxes':              'If You Pay Taxes',
+  'dealing-with-government':"If You're Dealing With Government",
+  'have-medical-bills':     'If You Have Medical Bills',
+  'own-a-home':             'If You Own a Home',
+  'have-insurance':         'If You Have Insurance',
+  'run-a-business':         'If You Run a Business',
+  'travel-often':           'If You Travel',
 };
 
 const categorySlug = entry.data.category;
@@ -111,6 +111,11 @@ function capitalize(s: string) {
             <span class="badge__val">{lastUpdated}</span>
           </span>
         </div>
+
+        <AiPromptModal
+          prompt={ai_prompt ?? `Help me understand and apply the "${title}" loophole to my situation. Ask me questions about my circumstances and then give me a personalized step-by-step action plan.`}
+          title={title}
+        />
       </div>
     </section>
 
@@ -163,9 +168,15 @@ function capitalize(s: string) {
           )}
 
           <div class="sidebar-card sidebar-card--cta">
-            <h2 class="sidebar-card__heading">Need Specific Help?</h2>
-            <p>If you need tailored guidance applying this to your situation, our consulting service can help.</p>
-            <a href="/#contact" class="btn btn--primary" style="margin-top:1.25rem; display:inline-flex;">Get in Touch →</a>
+            <span class="sidebar-ai-icon" aria-hidden="true">✦</span>
+            <h2 class="sidebar-card__heading">Chat with AI Agent</h2>
+            <p>Fill in your details and we'll open a personalised prompt in Perplexity AI.</p>
+            <button
+              id="ai-modal-trigger-sidebar"
+              class="btn btn--primary"
+              type="button"
+              style="margin-top:1.25rem; display:inline-flex; width:100%; justify-content:center;"
+            >Start Chat →</button>
           </div>
 
           <a href="/#services" class="sidebar-back">← Back to All Categories</a>
@@ -389,6 +400,13 @@ function capitalize(s: string) {
     margin-bottom: 1.25rem;
   }
   .sidebar-card--cta .sidebar-card__heading { color: var(--color-cream); }
+
+  .sidebar-ai-icon {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: rgba(242,235,224,0.6);
+  }
 
   .sidebar-dl {
     display: flex;
